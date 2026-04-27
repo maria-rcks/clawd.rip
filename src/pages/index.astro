@@ -175,7 +175,6 @@ const timelineSchema = {
               id="timeline-order-toggle"
               type="button"
               class="timeline-order-button ui-text"
-              aria-pressed="true"
               data-order="newest"
             >
               Oldest first
@@ -411,7 +410,6 @@ const timelineSchema = {
         }
 
         orderToggle.setAttribute("data-order", order);
-        orderToggle.setAttribute("aria-pressed", String(isNewest));
         orderToggle.textContent = isNewest ? "Oldest first" : "Newest first";
       };
 

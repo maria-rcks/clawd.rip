@@ -242,7 +242,7 @@ a:focus-visible {
   outline-offset: 4px;
 }
 
-.timeline-order-button[aria-pressed="true"] {
+.timeline-order-button[data-order="newest"] {
   color: color-mix(in srgb, var(--accent-dark) 60%, transparent);
 }
 
