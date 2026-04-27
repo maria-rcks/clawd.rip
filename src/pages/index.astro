@@ -98,9 +98,9 @@ const timelineSchema = {
     <title>{siteTitle}</title>
   </head>
   <body>
-    <main class="min-h-screen bg-[var(--canvas)]">
+    <main class="min-h-screen bg-(--canvas)">
       <header class="site-header">
-        <div class="header-inner mx-auto flex max-w-[88rem] items-center justify-between">
+        <div class="header-inner mx-auto flex max-w-352 items-center justify-between">
           <a href="/" class="brand-link flex items-center" aria-label="Clawd.rip home">
             <img
               src="/brand/claude-ai-icon.svg"
@@ -118,7 +118,7 @@ const timelineSchema = {
               height="225"
             />
           </a>
-          <p class="ui-text affiliate-note inline-flex min-w-0 items-center gap-2 text-[var(--muted)]">
+          <p class="ui-text affiliate-note inline-flex min-w-0 items-center gap-2 text-(--muted)">
             <span class="affiliate-note-label text-[0.7rem] font-bold uppercase leading-none tracking-[0.08em] opacity-80">
               Not affiliated with
             </span>
@@ -133,12 +133,12 @@ const timelineSchema = {
         </div>
       </header>
 
-      <section class="hero-section relative bg-[var(--canvas)]">
-        <div class="hero-shell mx-auto w-full max-w-[88rem] px-6 py-3 sm:px-10 sm:py-4 lg:px-20">
+      <section class="hero-section relative bg-(--canvas)">
+        <div class="hero-shell mx-auto w-full max-w-352 px-6 py-3 sm:px-10 sm:py-4 lg:px-20">
           <div class="hero-lockup">
             <div class="hero-copy min-w-0">
               <h1
-                class="brand-title leading-[0.95] text-[var(--ink)]"
+                class="brand-title leading-[0.95] text-(--ink)"
               >
                 <span class="hero-line-one block">
                   Everything that <span class="hero-correction">
@@ -163,13 +163,13 @@ const timelineSchema = {
         </div>
       </section>
 
-      <section class="relative bg-[var(--surface)]">
+      <section class="relative bg-(--surface)">
         <div
-          class="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[var(--canvas)] to-[var(--surface)] sm:h-28 lg:h-32"
+          class="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-b from-(--canvas) to-(--surface) sm:h-28 lg:h-32"
           aria-hidden="true"
         >
         </div>
-        <div class="relative mx-auto w-full max-w-[88rem] overflow-hidden px-6 pb-6 pt-0 sm:px-10 sm:pb-8 lg:px-20">
+        <div class="relative mx-auto w-full max-w-352 overflow-hidden px-6 pb-6 pt-0 sm:px-10 sm:pb-8 lg:px-20">
           <div class="timeline-toolbar relative z-20 mb-5 flex justify-start md:justify-center">
             <button
               id="timeline-order-toggle"
@@ -182,7 +182,7 @@ const timelineSchema = {
           </div>
           <div class="relative">
             <div
-              class="absolute bottom-0 left-[0.6875rem] top-[1.0625rem] w-px bg-[color-mix(in_srgb,var(--line)_80%,var(--ink-soft))] md:left-1/2 md:-translate-x-1/2"
+              class="absolute bottom-0 left-2.75 top-4.25 w-px bg-[color-mix(in_srgb,var(--line)_80%,var(--ink-soft))] md:left-1/2 md:-translate-x-1/2"
               aria-hidden="true"
             >
             </div>
@@ -199,7 +199,7 @@ const timelineSchema = {
                     class="timeline-entry relative pb-16 pl-10 md:pl-0"
                   >
                     <div
-                      class="timeline-marker absolute left-[0.4rem] top-[0.5625rem] z-10 h-4 w-4 rounded-full border border-[var(--accent)] bg-[var(--surface)] md:left-1/2 md:-translate-x-1/2"
+                      class="timeline-marker absolute left-[0.4rem] top-2.25 z-10 h-4 w-4 rounded-full border border-(--accent) bg-(--surface) md:left-1/2 md:-translate-x-1/2"
                       aria-hidden="true"
                     >
                     </div>
@@ -223,19 +223,19 @@ const timelineSchema = {
                     </figure>
                     <article class="timeline-content relative">
                       <div
-                        class="timeline-marker-mobile absolute left-[-2.3125rem] top-[0.53125rem] z-10 h-4 w-4 rounded-full border border-[var(--accent)] bg-[var(--surface)] md:hidden"
+                        class="timeline-marker-mobile absolute -left-9.25 top-[0.53125rem] z-10 h-4 w-4 rounded-full border border-(--accent) bg-(--surface) md:hidden"
                         aria-hidden="true"
                       >
                       </div>
                       <div
-                        class="timeline-branch absolute left-[-2rem] top-[1.03125rem] h-px w-8 bg-[color-mix(in_srgb,var(--line)_80%,var(--ink-soft))]"
+                        class="timeline-branch absolute -left-8 top-[1.03125rem] h-px w-8 bg-[color-mix(in_srgb,var(--line)_80%,var(--ink-soft))]"
                         aria-hidden="true"
                       >
                       </div>
                       <div class="timeline-meta">
                         <time
                           datetime={event.date}
-                          class="timeline-meta-date ui-text block text-sm font-semibold leading-6 text-[var(--muted)]"
+                          class="timeline-meta-date ui-text block text-sm font-semibold leading-6 text-(--muted)"
                         >
                           {event.period}
                         </time>
@@ -246,11 +246,11 @@ const timelineSchema = {
                         </span>
                       </div>
                       <h2
-                        class="timeline-title mt-4 text-[1.7rem] text-balance font-medium leading-[1.14] text-[var(--ink)] md:text-[1.8rem]"
+                        class="timeline-title mt-4 text-[1.7rem] text-balance font-medium leading-[1.14] text-(--ink) md:text-[1.8rem]"
                       >
                         {event.title}
                       </h2>
-                      <p class="mt-4 text-base leading-7 text-balance text-[var(--ink-soft)]">
+                      <p class="mt-4 text-base leading-7 text-balance text-(--ink-soft)">
                         {event.summary}
                       </p>
                       <div class="timeline-sources mt-5 flex flex-wrap gap-2">
@@ -260,7 +260,7 @@ const timelineSchema = {
                               href={source.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              class="ui-text inline-flex max-w-full items-center gap-1.5 rounded-[3px] border border-[var(--line)] bg-[var(--canvas)] px-2.5 py-1 text-sm leading-5 text-[var(--ink-soft)] transition hover:border-[var(--ink)] hover:text-[var(--ink)]"
+                              class="ui-text inline-flex max-w-full items-center gap-1.5 rounded-[3px] border border-(--line) bg-(--canvas) px-2.5 py-1 text-sm leading-5 text-(--ink-soft) transition hover:border-(--ink) hover:text-(--ink)"
                             >
                               <img
                                 src={source.icon}
@@ -287,8 +287,8 @@ const timelineSchema = {
         </div>
       </section>
 
-      <section class="closing-section bg-[var(--surface)]">
-        <div class="mx-auto flex w-full max-w-[88rem] flex-col items-center px-6 pb-2 pt-0 sm:px-10 sm:pb-3 lg:px-20">
+      <section class="closing-section bg-(--surface)">
+        <div class="mx-auto flex w-full max-w-352 flex-col items-center px-6 pb-2 pt-0 sm:px-10 sm:pb-3 lg:px-20">
           <figure class="closing-frame" aria-labelledby="closing-caption">
             <svg
               class="closing-handwriting-top"
@@ -329,8 +329,8 @@ const timelineSchema = {
         </div>
       </section>
 
-      <footer class="bg-[var(--surface)]">
-        <div class="mx-auto flex max-w-[88rem] justify-center px-6 pb-8 pt-0 sm:px-10 lg:px-20">
+      <footer class="bg-(--surface)">
+        <div class="mx-auto flex max-w-352 justify-center px-6 pb-8 pt-0 sm:px-10 lg:px-20">
           <nav class="flex items-center justify-center gap-5" aria-label="Social links">
             <a
               href="https://github.com/maria-rcks/clawd.rip"
@@ -376,7 +376,7 @@ const timelineSchema = {
               <img
                 src="/source-icons/kofi.ico"
                 alt=""
-                class="h-[28px] w-[28px] rounded-[2px]"
+                class="h-7 w-7 rounded-xs"
                 width="28"
                 height="28"
                 aria-hidden="true"
