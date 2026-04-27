@@ -1,0 +1,411 @@
+---
+import "../styles/global.css";
+import { timelineEvents } from "@/data/timeline";
+import type { TimelineEvent } from "@/data/timeline";
+
+type TimelineCategory = TimelineEvent["category"];
+
+const categoryStyles = {
+  Legal: "border-[color-mix(in_srgb,var(--accent-dark)_50%,transparent)] text-[color-mix(in_srgb,var(--accent-dark)_60%,transparent)]",
+  Quality: "border-[color-mix(in_srgb,#7a5636_50%,transparent)] text-[color-mix(in_srgb,#7a5636_60%,transparent)]",
+  Reliability: "border-[color-mix(in_srgb,#506047_50%,transparent)] text-[color-mix(in_srgb,#506047_60%,transparent)]",
+  Safety: "border-[color-mix(in_srgb,#7c4636_50%,transparent)] text-[color-mix(in_srgb,#7c4636_60%,transparent)]",
+  Policy: "border-[color-mix(in_srgb,#665744_50%,transparent)] text-[color-mix(in_srgb,#665744_60%,transparent)]",
+} as const;
+
+const incidentLayerGroups = {
+  Legal: Array.from({ length: 9 }, (_, index) => `/incident-layers/legal-${index}.avif`),
+  Quality: Array.from({ length: 9 }, (_, index) => `/incident-layers/quality-${index}.avif`),
+  Reliability: Array.from({ length: 9 }, (_, index) => `/incident-layers/reliability-${index}.avif`),
+  Policy: Array.from({ length: 9 }, (_, index) => `/incident-layers/policy-${index}.avif`),
+  Safety: [
+    "/incident-layers/policy-1.avif",
+    "/incident-layers/policy-4.avif",
+    "/incident-layers/quality-6.avif",
+    "/incident-layers/reliability-2.avif",
+    "/incident-layers/legal-4.avif",
+    "/incident-layers/policy-7.avif",
+    "/incident-layers/quality-2.avif",
+    "/incident-layers/reliability-5.avif",
+    "/incident-layers/legal-2.avif",
+  ],
+} satisfies Record<TimelineCategory, string[]>;
+
+const getIncidentLayers = (category: TimelineCategory, index: number) => {
+  const group = incidentLayerGroups[category];
+  return Array.from({ length: 3 }, (_, layerIndex) => group[(index * 2 + layerIndex * 3) % group.length]);
+};
+
+const siteTitle = "Everything That Went Wrong With Claude";
+const siteDescription =
+  "A satirical timeline of Claude and Anthropic controversies, outages, bans, legal disputes, policy fights, and quality complaints.";
+const siteUrl = "https://clawd.rip/";
+const previewImage = `${siteUrl}og-image.png`;
+const timelineSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: siteTitle,
+  description: siteDescription,
+  url: siteUrl,
+  numberOfItems: timelineEvents.length,
+  itemListElement: timelineEvents.map((event, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    url: `${siteUrl}#event-${index + 1}`,
+    item: {
+      "@type": "Article",
+      headline: event.title,
+      description: event.summary,
+      datePublished: event.date,
+      articleSection: event.category,
+      mainEntityOfPage: `${siteUrl}#event-${index + 1}`,
+      citation: event.sources.map((source) => source.url),
+    },
+  })),
+};
+
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={siteDescription} />
+    <meta name="theme-color" content="#faf9f5" />
+    <link rel="canonical" href={siteUrl} />
+    <link rel="icon" href="/brand/claude-ai-icon.svg" type="image/svg+xml" />
+    <link rel="shortcut icon" href="/brand/claude-ai-icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/brand/claude-ai-icon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:site_name" content="Clawd.rip" />
+    <meta property="og:title" content={siteTitle} />
+    <meta property="og:description" content={siteDescription} />
+    <meta property="og:image" content={previewImage} />
+    <meta property="og:image:alt" content="Clawd.rip hero: Everything that went wrong with Claude." />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={siteTitle} />
+    <meta name="twitter:description" content={siteDescription} />
+    <meta name="twitter:image" content={previewImage} />
+    <meta name="twitter:image:alt" content="Clawd.rip hero: Everything that went wrong with Claude." />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(timelineSchema)} />
+    <title>{siteTitle}</title>
+  </head>
+  <body>
+    <main class="min-h-screen bg-[var(--canvas)]">
+      <header class="site-header">
+        <div class="header-inner mx-auto flex max-w-[88rem] items-center justify-between">
+          <a href="/" class="brand-link flex items-center" aria-label="Clawd.rip home">
+            <img
+              src="/brand/claude-ai-icon.svg"
+              alt=""
+              class="brand-icon"
+              width="256"
+              height="257"
+              aria-hidden="true"
+            />
+            <img
+              src="/brand/clawd-rip-text-cropped.avif"
+              alt="Clawd.rip"
+              class="brand-wordmark"
+              width="936"
+              height="225"
+            />
+          </a>
+          <p class="ui-text affiliate-note inline-flex min-w-0 items-center gap-2 text-[var(--muted)]">
+            <span class="affiliate-note-label text-[0.7rem] font-bold uppercase leading-none tracking-[0.08em] opacity-80">
+              Not affiliated with
+            </span>
+            <img
+              src="/brand/anthropic-wordmark.svg"
+              alt="Anthropic"
+              class="h-2.5 w-auto opacity-70"
+              width="182"
+              height="24"
+            />
+          </p>
+        </div>
+      </header>
+
+      <section class="hero-section relative bg-[var(--canvas)]">
+        <div class="hero-shell mx-auto w-full max-w-[88rem] px-6 py-3 sm:px-10 sm:py-4 lg:px-20">
+          <div class="hero-lockup">
+            <div class="hero-copy min-w-0">
+              <h1
+                class="brand-title leading-[0.95] text-[var(--ink)]"
+              >
+                <span class="hero-line-one block">
+                  Everything that <span class="hero-correction">
+                    <span class="hero-struck">went</span>
+                    <span class="hero-insert">is</span>
+                  </span>
+                </span>
+                <span class="block">wrong with Claude.</span>
+              </h1>
+            </div>
+            <img
+              src="/brand/claude-pixelart.png"
+              alt=""
+              class="hero-pixel-art"
+              width="28"
+              height="11"
+              loading="eager"
+              decoding="async"
+              aria-hidden="true"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="relative bg-[var(--surface)]">
+        <div
+          class="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[var(--canvas)] to-[var(--surface)] sm:h-28 lg:h-32"
+          aria-hidden="true"
+        >
+        </div>
+        <div class="relative mx-auto w-full max-w-[88rem] overflow-hidden px-6 pb-6 pt-0 sm:px-10 sm:pb-8 lg:px-20">
+          <div class="relative">
+            <div
+              class="absolute bottom-0 left-[0.6875rem] top-[1.0625rem] w-px bg-[color-mix(in_srgb,var(--line)_80%,var(--ink-soft))] md:left-1/2 md:-translate-x-1/2"
+              aria-hidden="true"
+            >
+            </div>
+            <ol id="timeline" class="relative">
+            {
+              timelineEvents.map((event, index) => {
+                const isLeft = index % 2 === 0;
+                const layers = getIncidentLayers(event.category, index);
+                const placement = isLeft
+                  ? "md:mr-[calc(50%+3rem)] md:text-right"
+                  : "md:ml-[calc(50%+3rem)]";
+                const branch = isLeft
+                  ? "md:left-auto md:right-[-3rem]"
+                  : "md:left-[-3rem]";
+                const visualSide = isLeft ? "right" : "left";
+
+                return (
+                  <li
+                    id={`event-${index + 1}`}
+                    data-category={event.category}
+                    class="timeline-entry relative pb-16 pl-10 md:pl-0"
+                  >
+                    <div
+                      class="timeline-marker absolute left-[0.4rem] top-[0.5625rem] z-10 h-4 w-4 rounded-full border border-[var(--accent)] bg-[var(--surface)] md:left-1/2 md:-translate-x-1/2"
+                      aria-hidden="true"
+                    >
+                    </div>
+                    <figure
+                      class="timeline-visual"
+                      data-side={visualSide}
+                      aria-hidden="true"
+                    >
+                      {
+                        layers.map((layer, layerIndex) => (
+                          <img
+                            src={layer}
+                            alt=""
+                            class="incident-layer"
+                            style={`--layer-index: ${layerIndex}`}
+                            width="512"
+                            height="512"
+                            loading="lazy"
+                          />
+                        ))
+                      }
+                    </figure>
+                    <article class={`relative ${placement}`}>
+                      <div
+                        class="timeline-marker-mobile absolute left-[-2.3125rem] top-[0.53125rem] z-10 h-4 w-4 rounded-full border border-[var(--accent)] bg-[var(--surface)] md:hidden"
+                        aria-hidden="true"
+                      >
+                      </div>
+                      <div
+                        class={`absolute left-[-2rem] top-[1.03125rem] h-px w-8 bg-[color-mix(in_srgb,var(--line)_80%,var(--ink-soft))] ${branch}`}
+                        aria-hidden="true"
+                      >
+                      </div>
+                      <div class={`timeline-meta ${isLeft ? "timeline-meta-left" : ""}`}>
+                        <time
+                          datetime={event.date}
+                          class="timeline-meta-date ui-text block text-sm font-semibold leading-6 text-[var(--muted)]"
+                        >
+                          {event.period}
+                        </time>
+                        <span
+                          class={`timeline-meta-category ui-text inline-flex items-center rounded-full border bg-transparent px-2.5 py-px text-sm font-medium leading-4 ${categoryStyles[event.category]}`}
+                        >
+                          {event.category}
+                        </span>
+                      </div>
+                      <h2
+                        class={`timeline-title mt-4 text-[1.7rem] font-medium leading-[1.14] text-[var(--ink)] md:text-[1.8rem] ${isLeft ? "md:ml-auto" : ""}`}
+                      >
+                        {event.title}
+                      </h2>
+                      <p class="mt-4 text-base leading-7 text-[var(--ink-soft)]">
+                        {event.summary}
+                      </p>
+                      <div class={`mt-5 flex flex-wrap gap-2 ${isLeft ? "md:justify-end" : ""}`}>
+                        {
+                          event.sources.map((source) => (
+                            <a
+                              href={source.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class="ui-text inline-flex max-w-full items-center gap-1.5 rounded-[3px] border border-[var(--line)] bg-[var(--canvas)] px-2.5 py-1 text-sm leading-5 text-[var(--ink-soft)] transition hover:border-[var(--ink)] hover:text-[var(--ink)]"
+                            >
+                              <img
+                                src={source.icon}
+                                alt=""
+                                class="h-3.5 w-3.5 shrink-0"
+                                width="14"
+                                height="14"
+                                loading="lazy"
+                                aria-hidden="true"
+                              />
+                              <span class="truncate">{source.title}</span>
+                              <span class="sr-only">opens in a new tab</span>
+                            </a>
+                          ))
+                        }
+                      </div>
+                    </article>
+                  </li>
+                );
+              })
+            }
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing-section bg-[var(--surface)]">
+        <div class="mx-auto flex w-full max-w-[88rem] flex-col items-center px-6 pb-2 pt-0 sm:px-10 sm:pb-3 lg:px-20">
+          <figure class="closing-frame" aria-labelledby="closing-caption">
+            <svg
+              class="closing-handwriting-top"
+              viewBox="0 0 1200 150"
+              role="img"
+              aria-labelledby="closing-caption"
+            >
+              <title id="closing-caption">And remember kids... Don't Be Like Anthropic.</title>
+              <path id="closing-line-one" d="M318 128 Q600 38 882 128" fill="none"></path>
+              <text class="closing-handwriting-small">
+                <textPath href="#closing-line-one" startOffset="50%" text-anchor="middle">
+                  And remember kids...
+                </textPath>
+              </text>
+            </svg>
+            <img
+              src="/anthropicdead-light.png"
+              alt=""
+              class="closing-image"
+              width="1200"
+              height="629"
+              loading="lazy"
+              aria-hidden="true"
+            />
+            <svg
+              class="closing-handwriting-bottom"
+              viewBox="0 0 1200 190"
+              aria-hidden="true"
+            >
+              <path id="closing-line-two" d="M210 48 Q600 158 990 48" fill="none"></path>
+              <text class="closing-handwriting-large">
+                <textPath href="#closing-line-two" startOffset="50%" text-anchor="middle">
+                  Don't Be Like Anthropic.
+                </textPath>
+              </text>
+            </svg>
+          </figure>
+        </div>
+      </section>
+
+      <footer class="bg-[var(--surface)]">
+        <div class="mx-auto flex max-w-[88rem] justify-center px-6 pb-8 pt-0 sm:px-10 lg:px-20">
+          <nav class="flex items-center justify-center gap-5" aria-label="Social links">
+            <a
+              href="https://github.com/maria-rcks"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-link opacity-65 transition hover:opacity-100"
+              aria-label="GitHub, opens in a new tab"
+            >
+              <img
+                src="/source-icons/github.svg"
+                alt=""
+                class="h-5 w-5 invert"
+                width="20"
+                height="20"
+                aria-hidden="true"
+              />
+              <span class="sr-only">opens in a new tab</span>
+            </a>
+            <a
+              href="https://x.com/maria_rcks"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-link opacity-65 transition hover:opacity-100"
+              aria-label="X, opens in a new tab"
+            >
+              <img
+                src="/source-icons/x.svg"
+                alt=""
+                class="h-5 w-5 invert"
+                width="20"
+                height="20"
+                aria-hidden="true"
+              />
+              <span class="sr-only">opens in a new tab</span>
+            </a>
+            <a
+              href="https://ko-fi.com/maria_rcks"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-link opacity-65 transition hover:opacity-100"
+              aria-label="Ko-fi, opens in a new tab"
+            >
+              <img
+                src="/source-icons/kofi.ico"
+                alt=""
+                class="h-[28px] w-[28px] rounded-[2px]"
+                width="28"
+                height="28"
+                aria-hidden="true"
+              />
+              <span class="sr-only">opens in a new tab</span>
+            </a>
+          </nav>
+        </div>
+      </footer>
+    </main>
+    <script>
+      const observedEntries = document.querySelectorAll(".timeline-entry");
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+        for (const entry of observedEntries) {
+          entry.classList.add("is-visible");
+        }
+      } else {
+        const revealObserver = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              entry.target.classList.toggle("is-visible", entry.isIntersecting);
+            }
+          },
+          { rootMargin: "-18% 0px -18% 0px", threshold: 0.2 },
+        );
+
+        for (const entry of observedEntries) {
+          revealObserver.observe(entry);
+        }
+      }
+    </script>
+  </body>
+</html>

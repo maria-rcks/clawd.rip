@@ -1,0 +1,26 @@
+{
+  "name": "clawd-rip",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A satirical Astro timeline of Claude and Anthropic controversies.",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 0.0.0.0",
+    "build": "astro check && astro build",
+    "preview": "astro preview --host 0.0.0.0",
+    "lint": "oxlint .",
+    "format": "oxfmt --write ."
+  },
+  "dependencies": {
+    "@astrojs/check": "latest",
+    "@tailwindcss/vite": "latest",
+    "astro": "latest",
+    "tailwindcss": "latest",
+    "typescript": "latest"
+  },
+  "devDependencies": {
+    "oxfmt": "latest",
+    "oxlint": "latest"
+  },
+  "packageManager": "bun@1.3.11"
+}
