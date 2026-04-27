@@ -40,26 +40,26 @@ const displayedTimelineEvents = [...timelineEvents].reverse();
 const siteTitle = "Everything That Went Wrong With Claude";
 const siteDescription =
   "A satirical timeline of Claude and Anthropic controversies, outages, bans, legal disputes, policy fights, and quality complaints.";
-const siteUrl = "https://clawd.rip/";
-const previewImage = `${siteUrl}og-image.png`;
+const siteUrl = Astro.site ?? new URL("https://clawd.rip");
+const previewImage = new URL("/og-image.png", siteUrl);
 const timelineSchema = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   name: siteTitle,
   description: siteDescription,
-  url: siteUrl,
+  url: siteUrl.toString(),
   numberOfItems: timelineEvents.length,
   itemListElement: timelineEvents.map((event, index) => ({
     "@type": "ListItem",
     position: index + 1,
-    url: `${siteUrl}#event-${index + 1}`,
+    url: new URL(`#event-${index + 1}`, siteUrl).toString(),
     item: {
       "@type": "Article",
       headline: event.title,
       description: event.summary,
       datePublished: event.date,
       articleSection: event.category,
-      mainEntityOfPage: `${siteUrl}#event-${index + 1}`,
+      mainEntityOfPage: new URL(`#event-${index + 1}`, siteUrl).toString(),
       citation: event.sources.map((source) => source.url),
     },
   })),
