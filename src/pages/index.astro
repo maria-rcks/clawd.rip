@@ -36,6 +36,7 @@ const getIncidentLayers = (category: TimelineCategory, index: number) => {
   return Array.from({ length: 3 }, (_, layerIndex) => group[(index * 2 + layerIndex * 3) % group.length]);
 };
 
+const displayedTimelineEvents = [...timelineEvents].reverse();
 const siteTitle = "Everything That Went Wrong With Claude";
 const siteDescription =
   "A satirical timeline of Claude and Anthropic controversies, outages, bans, legal disputes, policy fights, and quality complaints.";
@@ -169,6 +170,17 @@ const timelineSchema = {
         >
         </div>
         <div class="relative mx-auto w-full max-w-[88rem] overflow-hidden px-6 pb-6 pt-0 sm:px-10 sm:pb-8 lg:px-20">
+          <div class="timeline-toolbar relative z-20 mb-5 flex justify-start md:justify-center">
+            <button
+              id="timeline-order-toggle"
+              type="button"
+              class="timeline-order-button ui-text"
+              aria-pressed="true"
+              data-order="newest"
+            >
+              Oldest first
+            </button>
+          </div>
           <div class="relative">
             <div
               class="absolute bottom-0 left-[0.6875rem] top-[1.0625rem] w-px bg-[color-mix(in_srgb,var(--line)_80%,var(--ink-soft))] md:left-1/2 md:-translate-x-1/2"
@@ -177,21 +189,14 @@ const timelineSchema = {
             </div>
             <ol id="timeline" class="relative">
             {
-              timelineEvents.map((event, index) => {
-                const isLeft = index % 2 === 0;
+              displayedTimelineEvents.map((event, index) => {
                 const layers = getIncidentLayers(event.category, index);
-                const placement = isLeft
-                  ? "md:mr-[calc(50%+3rem)] md:text-right"
-                  : "md:ml-[calc(50%+3rem)]";
-                const branch = isLeft
-                  ? "md:left-auto md:right-[-3rem]"
-                  : "md:left-[-3rem]";
-                const visualSide = isLeft ? "right" : "left";
 
                 return (
                   <li
-                    id={`event-${index + 1}`}
+                    id={`event-${timelineEvents.length - index}`}
                     data-category={event.category}
+                    data-timeline-entry
                     class="timeline-entry relative pb-16 pl-10 md:pl-0"
                   >
                     <div
@@ -201,7 +206,6 @@ const timelineSchema = {
                     </div>
                     <figure
                       class="timeline-visual"
-                      data-side={visualSide}
                       aria-hidden="true"
                     >
                       {
@@ -218,18 +222,18 @@ const timelineSchema = {
                         ))
                       }
                     </figure>
-                    <article class={`relative ${placement}`}>
+                    <article class="timeline-content relative">
                       <div
                         class="timeline-marker-mobile absolute left-[-2.3125rem] top-[0.53125rem] z-10 h-4 w-4 rounded-full border border-[var(--accent)] bg-[var(--surface)] md:hidden"
                         aria-hidden="true"
                       >
                       </div>
                       <div
-                        class={`absolute left-[-2rem] top-[1.03125rem] h-px w-8 bg-[color-mix(in_srgb,var(--line)_80%,var(--ink-soft))] ${branch}`}
+                        class="timeline-branch absolute left-[-2rem] top-[1.03125rem] h-px w-8 bg-[color-mix(in_srgb,var(--line)_80%,var(--ink-soft))]"
                         aria-hidden="true"
                       >
                       </div>
-                      <div class={`timeline-meta ${isLeft ? "timeline-meta-left" : ""}`}>
+                      <div class="timeline-meta">
                         <time
                           datetime={event.date}
                           class="timeline-meta-date ui-text block text-sm font-semibold leading-6 text-[var(--muted)]"
@@ -243,14 +247,14 @@ const timelineSchema = {
                         </span>
                       </div>
                       <h2
-                        class={`timeline-title mt-4 text-[1.7rem] text-balance font-medium leading-[1.14] text-[var(--ink)] md:text-[1.8rem] ${isLeft ? "md:ml-auto" : ""}`}
+                        class="timeline-title mt-4 text-[1.7rem] text-balance font-medium leading-[1.14] text-[var(--ink)] md:text-[1.8rem]"
                       >
                         {event.title}
                       </h2>
                       <p class="mt-4 text-base leading-7 text-balance text-[var(--ink-soft)]">
                         {event.summary}
                       </p>
-                      <div class={`mt-5 flex flex-wrap gap-2 ${isLeft ? "md:justify-end" : ""}`}>
+                      <div class="timeline-sources mt-5 flex flex-wrap gap-2">
                         {
                           event.sources.map((source) => (
                             <a
@@ -385,8 +389,39 @@ const timelineSchema = {
       </footer>
     </main>
     <script>
+      const timeline = document.querySelector("#timeline");
+      const orderToggle = document.querySelector("#timeline-order-toggle");
       const observedEntries = document.querySelectorAll(".timeline-entry");
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const timelineEntries = timeline
+        ? Array.from(timeline.querySelectorAll("[data-timeline-entry]"))
+            .filter((entry) => entry instanceof HTMLElement)
+        : [];
+
+      const setTimelineOrder = (order: "oldest" | "newest") => {
+        if (!timeline || !orderToggle) {
+          return;
+        }
+
+        const isNewest = order === "newest";
+        const orderedEntries = isNewest ? timelineEntries : [...timelineEntries].reverse();
+
+        for (const entry of orderedEntries) {
+          timeline.append(entry);
+        }
+
+        orderToggle.setAttribute("data-order", order);
+        orderToggle.setAttribute("aria-pressed", String(isNewest));
+        orderToggle.textContent = isNewest ? "Oldest first" : "Newest first";
+      };
+
+      if (timeline && orderToggle) {
+        setTimelineOrder("newest");
+
+        orderToggle.addEventListener("click", () => {
+          setTimelineOrder(orderToggle.getAttribute("data-order") === "newest" ? "oldest" : "newest");
+        });
+      }
 
       if (prefersReducedMotion || !("IntersectionObserver" in window)) {
         for (const entry of observedEntries) {
