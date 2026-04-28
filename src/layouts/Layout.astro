@@ -1,0 +1,18 @@
+---
+import "../styles/global.css";
+import Head from "@/components/Head.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <Head />
+  <body>
+    <main class="min-h-screen bg-(--canvas)">
+      <Header />
+      <slot />
+      <Footer />
+    </main>
+  </body>
+</html>
