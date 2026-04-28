@@ -40,7 +40,7 @@ const icons = {
   theHackerNews: "/source-icons/favicons/theHackerNews.webp",
   theRegister: "/source-icons/favicons/theRegister.webp",
   theVerge: "/source-icons/favicons/theVerge.avif",
-  time: "/source-icons/favicons/time.avif",
+
   tomsGuide: "/source-icons/favicons/tomsGuide.webp",
   tomsHardware: "/source-icons/favicons/tomsHardware.avif",
   ventureBeat: "/source-icons/favicons/ventureBeat.avif",
@@ -128,11 +128,7 @@ const source = {
     url: "https://authorsguild.org/advocacy/artificial-intelligence/what-authors-need-to-know-about-the-anthropic-settlement/",
     icon: "/source-icons/favicons/authorsGuild.webp",
   },
-  axiosBlackmail: {
-    title: "Axios",
-    url: "https://www.axios.com/2025/05/23/anthropic-ai-deception-risk",
-    icon: icons.axios,
-  },
+
   axiosNoKillSwitch: {
     title: "Axios",
     url: "https://www.axios.com/2026/04/22/anthropic-claude-pentagon-ai-kill-switch",
@@ -278,11 +274,7 @@ const source = {
     url: "https://www.ox.security/blog/the-mother-of-all-ai-supply-chains-critical-systemic-vulnerability-at-the-core-of-the-mcp/",
     icon: icons.oxSecurity,
   },
-  techCrunchBlackmail: {
-    title: "TechCrunch",
-    url: "https://techcrunch.com/2025/05/22/anthropics-new-ai-model-turns-to-blackmail-when-engineers-try-to-take-it-offline/",
-    icon: icons.techCrunch,
-  },
+
   techCrunchDMCA: {
     title: "TechCrunch",
     url: "https://techcrunch.com/2026/04/01/anthropic-took-down-thousands-of-github-repos-trying-to-yank-its-leaked-source-code-a-move-the-company-says-was-an-accident/",
@@ -373,11 +365,7 @@ const source = {
     url: "https://www.theregister.com/2026/04/22/anthropic_removes_claude_code_pro/",
     icon: icons.theRegister,
   },
-  timeBlackmail: {
-    title: "TIME",
-    url: "https://time.com/7287806/anthropic-claude-4-opus-safety-bio-risk/",
-    icon: icons.time,
-  },
+
   tomsGuideMarchOutage: {
     title: "Tom's Guide",
     url: "https://www.tomsguide.com/ai/claude-crashes-under-unprecedented-demand-service-restored-as-surge-shows-explosive-growth",
@@ -442,15 +430,7 @@ export const timelineEvents: TimelineEvent[] = [
     sources: [source.reutersHallucination],
     category: "Legal",
   },
-  {
-    date: "2025-05-22",
-    period: "May 22-23, 2025",
-    title: "Opus 4 Safety Tests Raise Blackmail Concerns",
-    summary:
-      "Claude Opus 4 safety testing included scenarios where the model attempted blackmail when facing replacement or shutdown, while Anthropic activated ASL-3 safeguards for higher-stakes risk. The safety lab shipped a model whose launch coverage read like a corporate thriller.",
-    sources: [source.axiosBlackmail, source.techCrunchBlackmail, source.timeBlackmail],
-    category: "Safety",
-  },
+
   {
     date: "2025-06-03",
     period: "Jun 3-5, 2025",
