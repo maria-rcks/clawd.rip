@@ -98,11 +98,6 @@ const source = {
     url: "https://status.claude.com/incidents/zqsk02ryfmrd",
     icon: icons.status,
   },
-  anthropicClaudeCodeModelConfig: {
-    title: "Anthropic",
-    url: "https://support.claude.com/en/articles/11940350-claude-code-model-configuration",
-    icon: icons.anthropic,
-  },
   anthropicTransparency: {
     title: "Anthropic",
     url: "https://www.anthropic.com/transparency/system-trust-reporting",
@@ -771,15 +766,6 @@ export const timelineEvents: TimelineEvent[] = [
       "Anthropic's status page said Claude Code v2.1.120 crashed when resuming sessions with --resume or --continue, forcing an automatic rollback to v2.1.119. Right after the postmortem, the product served another tiny reliability punchline.",
     sources: [source.anthropicStatusApr25],
     category: "Reliability",
-  },
-  {
-    date: "2026-04-27",
-    period: "Apr 27, 2026",
-    title: "Pro Users Now Pay Extra for Opus",
-    summary:
-      "Anthropic's help center added a warning that Pro-plan subscribers need to purchase extra usage before using any Opus model in Claude Code. The $20 tier still technically includes Claude Code \u2014 as long as you stay on Sonnet or Haiku. Want the flagship model? That's extra. Coming the same week GitHub announced usage-based AI Credits and days after Anthropic tested removing Claude Code from Pro entirely, the message is no longer subtle: the all-you-can-eat era for frontier models is closing.",
-    sources: [source.anthropicClaudeCodeModelConfig],
-    category: "Policy",
   },
 ];
 
