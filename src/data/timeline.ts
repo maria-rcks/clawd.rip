@@ -204,6 +204,11 @@ const source = {
     url: "https://github.com/anthropics/claude-code/issues/53262",
     icon: icons.github,
   },
+  githubCacheTTLRegression: {
+    title: "GitHub",
+    url: "https://github.com/anthropics/claude-code/issues/46829",
+    icon: icons.github,
+  },
   greptilePricing: {
     title: "Greptile",
     url: "https://www.greptile.com/pricing",
@@ -728,6 +733,15 @@ export const timelineEvents: TimelineEvent[] = [
       source.businessInsiderClaudeCode,
     ],
     category: "Quality",
+  },
+  {
+    date: "2026-04-12",
+    period: "Mar 6–Apr 12, 2026",
+    title: "Anthropic Silently Slashed Cache TTL, Inflating Everyone's Bills",
+    summary:
+      "Analysis of 119,866 API calls across two machines showed Anthropic quietly reverted Claude Code's prompt cache TTL from 1 hour to 5 minutes around March 6–8. During February, 1h TTL was the clean default across 33 consecutive days with zero 5m tokens. After the silent flip, cache expired mid-session and forced constant re-creation at 12.5× the read price, costing users an estimated 17% more — roughly $949 extra on Sonnet and $1,582 on Opus over three months. The regression also explained why subscription users started hitting quota limits for the first time in March.",
+    sources: [source.githubCacheTTLRegression],
+    category: "Reliability",
   },
   {
     date: "2026-04-25",
