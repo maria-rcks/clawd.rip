@@ -1,17 +1,25 @@
+---
+type Locale = "en" | "zh";
+
+const { locale = "en" } = Astro.props as { locale?: Locale };
+const isZh = locale === "zh";
+const newTabText = isZh ? "在新标签页打开" : "opens in a new tab";
+---
+
 <footer class="bg-(--surface)">
   <div
     class="mx-auto flex max-w-352 justify-center px-6 pb-8 pt-0 sm:px-10 lg:px-20"
   >
     <nav
       class="flex items-center justify-center gap-5"
-      aria-label="Social links"
+      aria-label={isZh ? "社交链接" : "Social links"}
     >
       <a
         href="https://github.com/maria-rcks/clawd.rip"
         target="_blank"
         rel="noopener noreferrer"
         class="social-link opacity-65 transition hover:opacity-100"
-        aria-label="GitHub, opens in a new tab"
+        aria-label={`GitHub, ${newTabText}`}
       >
         <img
           src="/source-icons/github.svg"
@@ -21,14 +29,14 @@
           height="20"
           aria-hidden="true"
         />
-        <span class="sr-only">opens in a new tab</span>
+        <span class="sr-only">{newTabText}</span>
       </a>
       <a
         href="https://x.com/maria_rcks"
         target="_blank"
         rel="noopener noreferrer"
         class="social-link opacity-65 transition hover:opacity-100"
-        aria-label="X, opens in a new tab"
+        aria-label={`X, ${newTabText}`}
       >
         <img
           src="/source-icons/x.svg"
@@ -38,14 +46,14 @@
           height="20"
           aria-hidden="true"
         />
-        <span class="sr-only">opens in a new tab</span>
+        <span class="sr-only">{newTabText}</span>
       </a>
       <a
         href="https://ko-fi.com/maria_rcks"
         target="_blank"
         rel="noopener noreferrer"
         class="social-link opacity-65 transition hover:opacity-100"
-        aria-label="Ko-fi, opens in a new tab"
+        aria-label={`Ko-fi, ${newTabText}`}
       >
         <img
           src="/source-icons/kofi.ico"
@@ -55,7 +63,7 @@
           height="28"
           aria-hidden="true"
         />
-        <span class="sr-only">opens in a new tab</span>
+        <span class="sr-only">{newTabText}</span>
       </a>
     </nav>
   </div>

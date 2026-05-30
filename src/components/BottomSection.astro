@@ -1,3 +1,10 @@
+---
+type Locale = "en" | "zh";
+
+const { locale = "en" } = Astro.props as { locale?: Locale };
+const isZh = locale === "zh";
+---
+
 <section class="closing-section bg-(--surface)">
   <div
     class="mx-auto flex w-full max-w-352 flex-col items-center px-6 pb-2 pt-0 sm:px-10 sm:pb-3 lg:px-20"
@@ -10,7 +17,7 @@
         aria-labelledby="closing-caption"
       >
         <title id="closing-caption">
-          And remember kids... Don't Be Like Anthropic.
+          {isZh ? "记住了，朋友们：别学 Anthropic。" : "And remember kids... Don't Be Like Anthropic."}
         </title>
         <path
           id="closing-line-one"
@@ -23,7 +30,7 @@
             startOffset="50%"
             text-anchor="middle"
           >
-            And remember kids...
+            {isZh ? "记住了，朋友们..." : "And remember kids..."}
           </textPath>
         </text>
       </svg>
@@ -52,7 +59,7 @@
             startOffset="50%"
             text-anchor="middle"
           >
-            Don't Be Like Anthropic.
+            {isZh ? "别学 Anthropic。" : "Don't Be Like Anthropic."}
           </textPath>
         </text>
       </svg>

@@ -2,8 +2,18 @@
 import "../styles/global.css";
 import { timelineEvents } from "@/data/timeline";
 import type { TimelineEvent } from "@/data/timeline";
+import { zhTimelineEvents } from "@/data/timeline.zh";
 
 type TimelineCategory = TimelineEvent["category"];
+type Locale = "en" | "zh";
+
+const { locale = "en" } = Astro.props as { locale?: Locale };
+const isZh = locale === "zh";
+const localizedTimelineEvents = isZh ? zhTimelineEvents : timelineEvents;
+const orderLabels = isZh
+  ? { oldest: "最早优先", newest: "最新优先" }
+  : { oldest: "Oldest first", newest: "Newest first" };
+const newTabText = isZh ? "在新标签页打开" : "opens in a new tab";
 
 const categoryStyles = {
   Legal:
@@ -17,6 +27,14 @@ const categoryStyles = {
   Policy:
     "border-[color-mix(in_srgb,#665744_50%,transparent)] text-[color-mix(in_srgb,#665744_60%,transparent)]",
 } as const;
+
+const zhCategoryLabels = {
+  Legal: "法律",
+  Quality: "质量",
+  Reliability: "可靠性",
+  Safety: "安全",
+  Policy: "政策",
+} satisfies Record<TimelineCategory, string>;
 
 const incidentLayerGroups = {
   Legal: Array.from(
@@ -56,7 +74,7 @@ const getIncidentLayers = (category: TimelineCategory, index: number) => {
   );
 };
 
-const displayedTimelineEvents = [...timelineEvents].reverse();
+const displayedTimelineEvents = [...localizedTimelineEvents].reverse();
 ---
 
 <section class="relative bg-(--surface)">
@@ -76,8 +94,10 @@ const displayedTimelineEvents = [...timelineEvents].reverse();
         type="button"
         class="timeline-order-button ui-text"
         data-order="newest"
+        data-oldest-label={orderLabels.oldest}
+        data-newest-label={orderLabels.newest}
       >
-        Oldest first
+        {orderLabels.oldest}
       </button>
     </div>
     <div class="relative">
@@ -93,7 +113,7 @@ const displayedTimelineEvents = [...timelineEvents].reverse();
 
             return (
               <li
-                id={`event-${timelineEvents.length - index}`}
+                id={`event-${localizedTimelineEvents.length - index}`}
                 data-category={event.category}
                 data-timeline-entry
                 class="timeline-entry relative pb-16 pl-10 md:pl-0"
@@ -134,7 +154,7 @@ const displayedTimelineEvents = [...timelineEvents].reverse();
                     <span
                       class={`timeline-meta-category ui-text inline-flex items-center rounded-full border bg-transparent px-2.5 py-px text-sm font-medium leading-4 ${categoryStyles[event.category]}`}
                     >
-                      {event.category}
+                      {isZh ? zhCategoryLabels[event.category] : event.category}
                     </span>
                   </div>
                   <h2 class="timeline-title mt-4 text-[1.7rem] text-balance font-medium leading-[1.14] text-(--ink) md:text-[1.8rem]">
@@ -161,7 +181,7 @@ const displayedTimelineEvents = [...timelineEvents].reverse();
                           aria-hidden="true"
                         />
                         <span class="truncate">{source.title}</span>
-                        <span class="sr-only">opens in a new tab</span>
+                        <span class="sr-only">{newTabText}</span>
                       </a>
                     ))}
                   </div>
@@ -202,7 +222,11 @@ const displayedTimelineEvents = [...timelineEvents].reverse();
     }
 
     orderToggle.setAttribute("data-order", order);
-    orderToggle.textContent = isNewest ? "Oldest first" : "Newest first";
+    const labels = {
+      oldest: orderToggle.getAttribute("data-oldest-label") ?? "Oldest first",
+      newest: orderToggle.getAttribute("data-newest-label") ?? "Newest first",
+    };
+    orderToggle.textContent = isNewest ? labels.oldest : labels.newest;
   };
 
   if (timeline && orderToggle) {

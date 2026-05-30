@@ -258,6 +258,37 @@ a:focus-visible {
   justify-content: flex-end;
 }
 
+.header-actions {
+  justify-content: flex-end;
+}
+
+.language-toggle {
+  display: inline-flex;
+  min-width: 3.75rem;
+  min-height: 1.875rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--canvas) 74%, transparent);
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    color 160ms ease,
+    background 160ms ease;
+}
+
+.language-toggle:hover {
+  border-color: color-mix(in srgb, var(--accent-dark) 55%, var(--line));
+  background: color-mix(in srgb, var(--canvas) 94%, white);
+  color: var(--ink);
+}
+
 .closing-section {
   overflow: hidden;
 }
@@ -522,6 +553,10 @@ a:focus-visible {
 
   .affiliate-note {
     gap: 0.35rem;
+  }
+
+  .header-actions {
+    gap: 0.5rem;
   }
 
   .affiliate-note-label {
