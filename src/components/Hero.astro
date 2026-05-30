@@ -1,5 +1,8 @@
 ---
+type Locale = "en" | "zh";
 
+const { locale = "en" } = Astro.props as { locale?: Locale };
+const isZh = locale === "zh";
 ---
 
 <section class="hero-section relative bg-(--canvas)">
@@ -9,13 +12,31 @@
     <div class="hero-lockup">
       <div class="hero-copy min-w-0">
         <h1 class="brand-title leading-[0.95] text-(--ink)">
-          <span class="hero-line-one block">
-            Everything that <span class="hero-correction">
-              <span class="hero-struck">went</span>
-              <span class="hero-insert">is</span>
-            </span>
-          </span>
-          <span class="block">wrong with Claude.</span>
+          {
+            isZh ? (
+              <>
+                <span class="hero-line-one block">
+                  Claude 那些
+                  <span class="hero-correction">
+                    <span class="hero-struck">翻过</span>
+                    <span class="hero-insert">正在翻</span>
+                  </span>
+                </span>
+                <span class="block">的车。</span>
+              </>
+            ) : (
+              <>
+                <span class="hero-line-one block">
+                  Everything that{" "}
+                  <span class="hero-correction">
+                    <span class="hero-struck">went</span>
+                    <span class="hero-insert">is</span>
+                  </span>
+                </span>
+                <span class="block">wrong with Claude.</span>
+              </>
+            )
+          }
         </h1>
       </div>
       <img

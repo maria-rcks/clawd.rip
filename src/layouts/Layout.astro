@@ -3,16 +3,21 @@ import "../styles/global.css";
 import Head from "@/components/Head.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+
+type Locale = "en" | "zh";
+
+const { locale = "en" } = Astro.props as { locale?: Locale };
+const lang = locale === "zh" ? "zh-CN" : "en";
 ---
 
 <!doctype html>
-<html lang="en">
-  <Head />
+<html lang={lang}>
+  <Head locale={locale} />
   <body>
     <main class="min-h-screen bg-(--canvas)">
-      <Header />
+      <Header locale={locale} />
       <slot />
-      <Footer />
+      <Footer locale={locale} />
     </main>
   </body>
 </html>

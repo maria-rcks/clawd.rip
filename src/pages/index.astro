@@ -12,3 +12,24 @@ import Layout from "@/layouts/Layout.astro";
   <Timeline />
   <BottomSection />
 </Layout>
+<script>
+  const chineseTimeZones = new Set([
+    "Asia/Shanghai",
+    "Asia/Hong_Kong",
+    "Asia/Macau",
+    "Asia/Taipei",
+  ]);
+
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  let preferredLocale = null;
+
+  try {
+    preferredLocale = localStorage.getItem("clawd.locale");
+  } catch {
+    preferredLocale = null;
+  }
+
+  if (!preferredLocale && timeZone && chineseTimeZones.has(timeZone)) {
+    window.location.replace("/zh/");
+  }
+</script>
