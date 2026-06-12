@@ -713,6 +713,15 @@ export const timelineEvents: TimelineEvent[] = [
     category: "Policy",
   },
   {
+    date: "2026-04-12",
+    period: "Mar 6-Apr 12, 2026",
+    title: "Claude Code Cache Shrunk to Five Minutes, Costing Users $1,500",
+    summary:
+      "For 33 days the cache lived for an hour, then quietly dropped to five minutes. The change spiked read costs 12.5x, adding an estimated $949-$1,582 per user over three months before Anthropic called it a bug.",
+    sources: [source.githubCacheTTLRegression],
+    category: "Reliability",
+  },
+  {
     date: "2026-04-15",
     period: "Apr 15, 2026",
     title: "Claude Login Breaks Across the Board",
@@ -769,15 +778,6 @@ export const timelineEvents: TimelineEvent[] = [
       source.businessInsiderClaudeCode,
     ],
     category: "Quality",
-  },
-  {
-    date: "2026-04-12",
-    period: "Mar 6-Apr 12, 2026",
-    title: "Claude Code Cache Shrunk to Five Minutes, Costing Users $1,500",
-    summary:
-      "For 33 days the cache lived for an hour, then quietly dropped to five minutes. The change spiked read costs 12.5x, adding an estimated $949-$1,582 per user over three months before Anthropic called it a bug.",
-    sources: [source.githubCacheTTLRegression],
-    category: "Reliability",
   },
   {
     date: "2026-04-25",
