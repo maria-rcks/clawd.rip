@@ -1,60 +1,7 @@
 ---
 import "../styles/global.css";
 import { timelineEvents } from "@/data/timeline";
-import type { TimelineEvent } from "@/data/timeline";
-
-type TimelineCategory = TimelineEvent["category"];
-
-const categoryStyles = {
-  Legal:
-    "border-[color-mix(in_srgb,var(--cat-legal)_45%,transparent)] bg-[color-mix(in_srgb,var(--cat-legal)_6%,transparent)] text-[color-mix(in_srgb,var(--cat-legal)_72%,transparent)]",
-  Quality:
-    "border-[color-mix(in_srgb,var(--cat-quality)_45%,transparent)] bg-[color-mix(in_srgb,var(--cat-quality)_6%,transparent)] text-[color-mix(in_srgb,var(--cat-quality)_72%,transparent)]",
-  Reliability:
-    "border-[color-mix(in_srgb,var(--cat-reliability)_45%,transparent)] bg-[color-mix(in_srgb,var(--cat-reliability)_6%,transparent)] text-[color-mix(in_srgb,var(--cat-reliability)_72%,transparent)]",
-  Safety:
-    "border-[color-mix(in_srgb,var(--cat-safety)_45%,transparent)] bg-[color-mix(in_srgb,var(--cat-safety)_6%,transparent)] text-[color-mix(in_srgb,var(--cat-safety)_72%,transparent)]",
-  Policy:
-    "border-[color-mix(in_srgb,var(--cat-policy)_45%,transparent)] bg-[color-mix(in_srgb,var(--cat-policy)_6%,transparent)] text-[color-mix(in_srgb,var(--cat-policy)_72%,transparent)]",
-} as const;
-
-const incidentLayerGroups = {
-  Legal: Array.from(
-    { length: 9 },
-    (_, index) => `/incident-layers/legal-${index}.avif`,
-  ),
-  Quality: Array.from(
-    { length: 9 },
-    (_, index) => `/incident-layers/quality-${index}.avif`,
-  ),
-  Reliability: Array.from(
-    { length: 9 },
-    (_, index) => `/incident-layers/reliability-${index}.avif`,
-  ),
-  Policy: Array.from(
-    { length: 9 },
-    (_, index) => `/incident-layers/policy-${index}.avif`,
-  ),
-  Safety: [
-    "/incident-layers/policy-1.avif",
-    "/incident-layers/policy-4.avif",
-    "/incident-layers/quality-6.avif",
-    "/incident-layers/reliability-2.avif",
-    "/incident-layers/legal-4.avif",
-    "/incident-layers/policy-7.avif",
-    "/incident-layers/quality-2.avif",
-    "/incident-layers/reliability-5.avif",
-    "/incident-layers/legal-2.avif",
-  ],
-} satisfies Record<TimelineCategory, string[]>;
-
-const getIncidentLayers = (category: TimelineCategory, index: number) => {
-  const group = incidentLayerGroups[category];
-  return Array.from(
-    { length: 3 },
-    (_, layerIndex) => group[(index * 2 + layerIndex * 3) % group.length],
-  );
-};
+import { categoryStyles, getIncidentLayers } from "@/lib/event-visuals";
 
 const displayedTimelineEvents = [...timelineEvents].reverse();
 ---
@@ -148,10 +95,23 @@ const displayedTimelineEvents = [...timelineEvents].reverse();
                     </span>
                   </div>
                   <h2 class="timeline-title mt-4 text-[1.7rem] text-balance font-medium leading-[1.14] text-(--ink) md:text-[1.8rem]">
-                    {event.title}
+                    <a
+                      href={`/events/${event.slug}/`}
+                      class="timeline-title-link transition hover:text-(--accent-dark)"
+                    >
+                      {event.title}
+                    </a>
                   </h2>
                   <p class="mt-4 text-base leading-7 text-balance text-(--ink-soft)">
                     {event.summary}
+                  </p>
+                  <p class="mt-3">
+                    <a
+                      href={`/events/${event.slug}/`}
+                      class="ui-text text-sm font-medium text-[color-mix(in_srgb,var(--accent-dark)_70%,transparent)] underline decoration-1 underline-offset-[0.2em] transition hover:text-(--accent-dark)"
+                    >
+                      Full story
+                    </a>
                   </p>
                   <div class="timeline-sources mt-5 flex flex-wrap gap-2">
                     {event.sources.map((source) => (

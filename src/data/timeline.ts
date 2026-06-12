@@ -7,6 +7,7 @@ export type TimelineSource = {
 export type TimelineEvent = {
   date: string;
   period: string;
+  slug: string;
   title: string;
   summary: string;
   sources: TimelineSource[];
@@ -437,6 +438,7 @@ const source = {
 export const timelineEvents: TimelineEvent[] = [
   {
     date: "2023-10-18",
+    slug: "music-publishers-lawsuit",
     period: "Oct 18, 2023",
     title: "Music Publishers Sue Claude Into Next Week",
     summary:
@@ -446,6 +448,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2024-07-25",
+    slug: "claudebot-hammers-ifixit",
     period: "Jul 2024",
     title: "ClaudeBot Devours iFixit's Bandwidth",
     summary:
@@ -455,6 +458,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2024-08-20",
+    slug: "authors-shadow-library-lawsuit",
     period: "Aug 20, 2024",
     title: "Authors Tag Claude for Shadow-Library Theft",
     summary:
@@ -464,6 +468,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2025-05-15",
+    slug: "claude-hallucinates-in-court",
     period: "May 15, 2025",
     title: "Claude Cites Fake Case in Its Own Lawsuit",
     summary:
@@ -474,6 +479,7 @@ export const timelineEvents: TimelineEvent[] = [
 
   {
     date: "2025-06-03",
+    slug: "windsurf-cut-off",
     period: "Jun 3-5, 2025",
     title: "Windsurf Gets Throttled Overnight",
     summary:
@@ -483,6 +489,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2025-06-04",
+    slug: "reddit-lawsuit",
     period: "Jun 4, 2025",
     title: "Reddit Sues Over Endless Scraping",
     summary:
@@ -492,6 +499,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2025-06-24",
+    slug: "fair-use-ruling",
     period: "Jun 24-25, 2025",
     title: "Fair-Use Win, Piracy Footnote",
     summary:
@@ -501,6 +509,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2025-07-16",
+    slug: "boris-and-cat-poached",
     period: "Feb-Jul 2025",
     title: "Boris and Cat Quit, Then Un-Quit",
     summary:
@@ -510,6 +519,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2025-07-28",
+    slug: "claude-code-rate-limits",
     period: "Jul 28, 2025",
     title: "Claude Code Hits Weekly Ration Wall",
     summary:
@@ -519,6 +529,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2025-08-01",
+    slug: "openai-booted-from-claude",
     period: "Aug 1-2, 2025",
     title: "Anthropic Kicks OpenAI Out of Claude",
     summary:
@@ -528,6 +539,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2025-08-27",
+    slug: "claude-cybercrime-reports",
     period: "Aug 27, 2025",
     title: "Claude Code Lands in Crime Reports",
     summary:
@@ -537,6 +549,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2025-09-10",
+    slug: "september-outage",
     period: "Sep 10, 2025",
     title: "Claude Goes Dark at Peak Demand",
     summary:
@@ -546,6 +559,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2025-09-17",
+    slug: "september-postmortem",
     period: "Sep 17, 2025",
     title: "Anthropic Finally Admits Claude Got Dumber",
     summary:
@@ -555,6 +569,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2025-09-25",
+    slug: "pirated-books-settlement",
     period: "Sep 25, 2025",
     title: "Anthropic Pays $1.5B for Pirated Books",
     summary:
@@ -564,6 +579,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2025-11-13",
+    slug: "claude-code-espionage",
     period: "Nov 13, 2025",
     title: "China-Linked Crew Weaponizes Claude Code",
     summary:
@@ -573,6 +589,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-01-11",
+    slug: "xai-lockout",
     period: "Jan 2026",
     title: "xAI Gets the Rival Boot",
     summary:
@@ -582,6 +599,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-01-27",
+    slug: "clawdbot-rename-saga",
     period: "Jan 27-Feb 15, 2026",
     title: "Anthropic Lawyers vs. ClawdBot",
     summary:
@@ -595,6 +613,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-01-29",
+    slug: "transparency-report-bans",
     period: "Jan 29, 2026",
     title: "Transparency: 1.45M Bans",
     summary:
@@ -604,6 +623,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-02-23",
+    slug: "distillation-attacks",
     period: "Feb 23, 2026",
     title: "Anthropic Cries Distillation Attack",
     summary:
@@ -618,6 +638,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-02-26",
+    slug: "pentagon-standoff",
     period: "Feb 26-27, 2026",
     title: "Pentagon Ultimatum, Anthropic Balks",
     summary:
@@ -627,6 +648,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-03-02",
+    slug: "march-outage",
     period: "Mar 2-3, 2026",
     title: "Claude Buckles Under Demand",
     summary:
@@ -636,6 +658,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-03-04",
+    slug: "supply-chain-risk-designation",
     period: "Mar 4-12, 2026",
     title: "Pentagon Tags Anthropic Supply-Chain Risk",
     summary:
@@ -649,6 +672,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-03-09",
+    slug: "code-review-pricing",
     period: "Mar 9, 2026",
     title: "Claude Code Review Wants $25 per PR",
     summary:
@@ -664,6 +688,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-03-31",
+    slug: "claude-code-source-leak",
     period: "Mar 31-Apr 1, 2026",
     title: "Claude Code Leaks Half-Million Lines",
     summary:
@@ -673,6 +698,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-04-01",
+    slug: "github-dmca-takedowns",
     period: "Apr 1, 2026",
     title: "Anthropic DMCA-Bombs GitHub",
     summary:
@@ -682,6 +708,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-04-02",
+    slug: "amd-regression-report",
     period: "Apr 2-14, 2026",
     title: "AMD AI Lead Files 'Claude Is Broken' Bug",
     summary:
@@ -696,6 +723,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-04-04",
+    slug: "openclaw-claw-tax",
     period: "Apr 4, 2026",
     title: "OpenClaw Users Hit the Claw Tax",
     summary:
@@ -705,6 +733,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-04-10",
+    slug: "openclaw-creator-banned",
     period: "Apr 10, 2026",
     title: "OpenClaw Creator Gets Banned Anyway",
     summary:
@@ -714,6 +743,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-04-12",
+    slug: "cache-ttl-regression",
     period: "Mar 6-Apr 12, 2026",
     title: "Claude Code's Cache Amnesia: $1.5K Surprise",
     summary:
@@ -723,6 +753,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-04-15",
+    slug: "april-login-outage",
     period: "Apr 15, 2026",
     title: "Claude Login Dies Again",
     summary:
@@ -732,6 +763,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-04-15",
+    slug: "mcp-rce-expected-behavior",
     period: "Apr 15-16, 2026",
     title: "Anthropic Calls RCE 'Expected'",
     summary:
@@ -741,6 +773,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-04-17",
+    slug: "belo-lockout",
     period: "Apr 17-18, 2026",
     title: "Claude Locks Out 60 Workers via Google Form",
     summary:
@@ -750,6 +783,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-04-21",
+    slug: "claude-code-pro-paywall",
     period: "Apr 21-22, 2026",
     title: "Anthropic Experiments With $100 Claude Code Wall",
     summary:
@@ -759,6 +793,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-04-22",
+    slug: "no-kill-switch-filing",
     period: "Apr 22, 2026",
     title: "No Kill Switch Inside Classified Nets",
     summary:
@@ -768,6 +803,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-04-23",
+    slug: "april-postmortem",
     period: "Apr 23-24, 2026",
     title: "Anthropic Confirms Claude Code Was Nerfed",
     summary:
@@ -781,6 +817,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-04-25",
+    slug: "hermes-md-billing-bug",
     period: "Apr 25-26, 2026",
     title: "Anthropic Bills Extra If It Hates Your File Name",
     summary:
@@ -790,6 +827,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-04-25",
+    slug: "resume-crash-rollback",
     period: "Apr 25, 2026",
     title: "Claude Code Update Crashes on Resume",
     summary:
@@ -799,6 +837,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-05-13",
+    slug: "agent-sdk-credit-bucket",
     period: "May 13, 2026",
     title: "Claude's 'Free Credits' Hide 25x Price Hike",
     summary:
@@ -812,6 +851,7 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-06-09",
+    slug: "fable-5-research-sabotage",
     period: "Jun 9-11, 2026",
     title: "Anthropic Cripples Frontier AI Research in Fable 5, Then Says Oops",
     summary:

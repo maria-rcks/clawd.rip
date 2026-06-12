@@ -4,11 +4,18 @@ import FunFx from "@/components/FunFx.astro";
 import Head from "@/components/Head.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import type { ComponentProps } from "astro/types";
+
+interface Props {
+  head?: ComponentProps<typeof Head>;
+}
+
+const { head } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
-  <Head />
+  <Head {...head} />
   <body>
     <main class="min-h-screen bg-(--canvas)">
       <Header />

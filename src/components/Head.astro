@@ -2,11 +2,29 @@
 import "../styles/global.css";
 import { timelineEvents } from "@/data/timeline";
 
+interface Props {
+  title?: string;
+  description?: string;
+  path?: string;
+  image?: string;
+  imageAlt?: string;
+  ogType?: string;
+  schema?: Record<string, unknown>;
+}
+
 const siteTitle = "Everything That Went Wrong With Claude";
 const siteDescription =
   "A satirical timeline of Claude and Anthropic controversies, outages, bans, legal disputes, policy fights, and quality complaints.";
 const siteUrl = Astro.site ?? new URL("https://clawd.rip");
-const previewImage = new URL("/og-image.png", siteUrl);
+
+const title = Astro.props.title ?? siteTitle;
+const description = Astro.props.description ?? siteDescription;
+const pageUrl = new URL(Astro.props.path ?? "/", siteUrl);
+const previewImage = new URL(Astro.props.image ?? "/og-image.png", siteUrl);
+const previewImageAlt =
+  Astro.props.imageAlt ?? "Clawd.rip hero: Everything that went wrong with Claude.";
+const ogType = Astro.props.ogType ?? "website";
+
 const timelineSchema = {
   "@context": "https://schema.org",
   "@type": "ItemList",
@@ -17,54 +35,46 @@ const timelineSchema = {
   itemListElement: timelineEvents.map((event, index) => ({
     "@type": "ListItem",
     position: index + 1,
-    url: new URL(`#event-${index + 1}`, siteUrl).toString(),
+    url: new URL(`/events/${event.slug}/`, siteUrl).toString(),
     item: {
       "@type": "Article",
       headline: event.title,
       description: event.summary,
       datePublished: event.date,
       articleSection: event.category,
-      mainEntityOfPage: new URL(`#event-${index + 1}`, siteUrl).toString(),
+      mainEntityOfPage: new URL(`/events/${event.slug}/`, siteUrl).toString(),
       citation: event.sources.map((source) => source.url),
     },
   })),
 };
+
+const schema = Astro.props.schema ?? timelineSchema;
 ---
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content={siteDescription} />
+  <meta name="description" content={description} />
   <meta name="theme-color" content="#faf9f5" />
-  <link rel="canonical" href={siteUrl.toString()} />
+  <link rel="canonical" href={pageUrl.toString()} />
   <link rel="icon" href="/brand/claude-ai-icon.svg" type="image/svg+xml" />
 
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={siteUrl.toString()} />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:url" content={pageUrl.toString()} />
   <meta property="og:site_name" content="Clawd.rip" />
-  <meta property="og:title" content={siteTitle} />
-  <meta property="og:description" content={siteDescription} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
   <meta property="og:image" content={previewImage.toString()} />
-  <meta
-    property="og:image:alt"
-    content="Clawd.rip hero: Everything that went wrong with Claude."
-  />
+  <meta property="og:image:alt" content={previewImageAlt} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={siteTitle} />
-  <meta name="twitter:description" content={siteDescription} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={previewImage.toString()} />
-  <meta
-    name="twitter:image:alt"
-    content="Clawd.rip hero: Everything that went wrong with Claude."
-  />
-  <script
-    type="application/ld+json"
-    is:inline
-    set:html={JSON.stringify(timelineSchema)}
-  />
+  <meta name="twitter:image:alt" content={previewImageAlt} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
   <script is:inline>
     try {
       if (localStorage.getItem("clawd-theme") === "dark") {
@@ -76,5 +86,5 @@ const timelineSchema = {
       /* localStorage unavailable */
     }
   </script>
-  <title>{siteTitle}</title>
+  <title>{title}</title>
 </head>

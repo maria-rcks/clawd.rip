@@ -543,6 +543,195 @@ a:focus-visible {
   }
 }
 
+/* Event detail pages */
+
+.event-hero-lockup {
+  display: grid;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.event-hero-visual {
+  position: relative;
+  margin: 0;
+  width: min(17.5rem, calc(100vw - 5.75rem));
+  height: clamp(10.5rem, 48vw, 13.5rem);
+  pointer-events: none;
+}
+
+.event-hero-visual .incident-layer {
+  opacity: 0.96;
+  filter: var(--sticker-outline) blur(0) drop-shadow(0 0.45rem 0.9rem rgba(20, 20, 19, 0.07));
+  transform: translateY(0) scale(1) rotate(var(--layer-rotate));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .event-hero-visual .incident-layer {
+    animation: event-layer-in 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--layer-index) * 95ms);
+  }
+
+  @keyframes event-layer-in {
+    from {
+      opacity: 0;
+      filter: var(--sticker-outline) blur(7px) drop-shadow(0 0.45rem 0.9rem rgba(20, 20, 19, 0.07));
+      transform: translateY(var(--layer-y)) scale(0.94) rotate(calc(var(--layer-rotate) * 0.25));
+    }
+  }
+}
+
+html.dark .event-sources a img,
+html.dark .event-reaction footer img {
+  border-radius: 3px;
+  background: #faf9f5;
+  box-shadow: 0 0 0 2px #faf9f5;
+}
+
+@media (min-width: 768px) {
+  .event-hero-lockup {
+    grid-template-columns: minmax(0, 1fr) clamp(16rem, 26vw, 21rem);
+  }
+
+  .event-hero-visual {
+    width: clamp(16rem, 26vw, 21rem);
+    height: clamp(12rem, 20vw, 16rem);
+    justify-self: end;
+  }
+}
+
+.event-article {
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+.event-body p {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+
+.event-body p + p {
+  margin-top: 1.3rem;
+}
+
+.event-body > p:first-child::first-letter {
+  float: left;
+  margin: 0.08em 0.12em 0 0;
+  font-size: 3.1em;
+  line-height: 0.82;
+  font-weight: 500;
+  color: var(--accent-dark);
+}
+
+.event-body a,
+.event-aftermath a,
+.event-receipt a {
+  color: var(--accent-dark);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  transition: color 160ms ease;
+}
+
+.event-body a:hover,
+.event-aftermath a:hover,
+.event-receipt a:hover {
+  color: var(--accent);
+}
+
+.event-body code,
+.event-receipt code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  background: color-mix(in srgb, var(--line-soft) 55%, transparent);
+  border-radius: 3px;
+  padding: 0.08em 0.3em;
+}
+
+.event-receipts {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--canvas);
+  padding: 1.4rem 1.5rem 1.5rem;
+}
+
+.event-receipt {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.event-receipt::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 0.55rem;
+  height: 1px;
+  background: var(--accent);
+}
+
+.event-figure {
+  margin: 0;
+}
+
+.event-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--canvas);
+}
+
+.event-reaction {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--canvas);
+  padding: 1.15rem 1.25rem 1.05rem;
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.event-reaction:hover {
+  border-color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.event-reaction blockquote {
+  margin: 0;
+}
+
+.event-aftermath {
+  border-left: 2px solid color-mix(in srgb, var(--accent) 65%, transparent);
+  padding-left: 1.4rem;
+}
+
+.event-copy-link {
+  cursor: pointer;
+}
+
+.event-pagination-link {
+  display: block;
+  text-decoration: none;
+  transition: opacity 160ms ease;
+}
+
+.event-pagination-link:hover span:last-child {
+  color: var(--accent-dark);
+}
+
+@media (max-width: 767px) {
+  .event-hero-visual {
+    margin-top: 0.5rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

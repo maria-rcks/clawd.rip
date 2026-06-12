@@ -1,0 +1,364 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { timelineEvents } from "@/data/timeline";
+import type { TimelineEvent } from "@/data/timeline";
+import type { EventDetail, ReactionPlatform } from "@/data/event-detail";
+import { categoryStyles, getIncidentLayers } from "@/lib/event-visuals";
+
+export function getStaticPaths() {
+  return timelineEvents.map((event, index) => ({
+    params: { slug: event.slug },
+    props: { event, index },
+  }));
+}
+
+interface Props {
+  event: TimelineEvent;
+  index: number;
+}
+
+const { event, index } = Astro.props;
+
+const detailModules = import.meta.glob<{ detail: EventDetail }>("../../data/event-details/*.ts", {
+  eager: true,
+});
+const detail = Object.values(detailModules).find((module) => module.detail.slug === event.slug)
+  ?.detail;
+
+const body = detail?.body ?? [event.summary];
+const reactions = detail?.reactions ?? [];
+const images = detail?.images ?? [];
+const receipts = detail?.receipts ?? [];
+
+const previousEvent = timelineEvents[index - 1];
+const nextEvent = timelineEvents[index + 1];
+const layers = getIncidentLayers(event.category, index);
+
+const platformIcons: Record<ReactionPlatform, { icon: string; label: string }> = {
+  x: { icon: "/source-icons/x.svg", label: "X" },
+  reddit: { icon: "/source-icons/reddit.svg", label: "Reddit" },
+  hackernews: { icon: "/source-icons/hackernews.svg", label: "Hacker News" },
+  github: { icon: "/source-icons/github.svg", label: "GitHub" },
+  news: { icon: "/source-icons/news.svg", label: "Press" },
+  other: { icon: "/source-icons/news.svg", label: "Web" },
+};
+
+const pageTitle = `${event.title} — Clawd.rip`;
+const pageDescription = detail?.deck ?? event.summary;
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: event.title,
+  description: pageDescription,
+  datePublished: event.date,
+  articleSection: event.category,
+  mainEntityOfPage: new URL(`/events/${event.slug}/`, Astro.site ?? "https://clawd.rip").toString(),
+  citation: event.sources.map((source) => source.url),
+};
+---
+
+<Layout
+  head={{
+    title: pageTitle,
+    description: pageDescription,
+    path: `/events/${event.slug}/`,
+    ogType: "article",
+    schema: articleSchema,
+  }}
+>
+  <article class="event-page">
+    <header class="relative overflow-hidden bg-(--canvas)">
+      <div class="relative mx-auto w-full max-w-352 px-6 pb-10 pt-8 sm:px-10 sm:pt-10 lg:px-20">
+        <nav class="ui-text mb-10 flex items-center justify-between gap-4 text-sm">
+          <a
+            href={`/#event-${index + 1}`}
+            class="inline-flex items-center gap-1.5 font-medium text-(--muted) transition hover:text-(--ink)"
+          >
+            <span aria-hidden="true">&larr;</span>
+            The full timeline
+          </a>
+          <button
+            id="copy-link"
+            type="button"
+            class="event-copy-link inline-flex items-center gap-1.5 rounded-[3px] border border-(--line) bg-(--canvas) px-2.5 py-1 font-medium text-(--ink-soft) transition hover:border-(--ink) hover:text-(--ink)"
+          >
+            <svg
+              width="13"
+              height="13"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+            <span data-copy-label>Copy link</span>
+          </button>
+        </nav>
+
+        <div class="event-hero-lockup">
+          <div class="event-hero-copy">
+            <div class="ui-text flex flex-wrap items-center gap-x-2.5 gap-y-2 text-sm">
+              <span
+                class={`inline-flex items-center rounded-full border px-2.5 py-px font-medium leading-4 ${categoryStyles[event.category]}`}
+              >
+                {event.category}
+              </span>
+              <time datetime={event.date} class="font-semibold text-(--muted)">
+                {event.period}
+              </time>
+              <span class="text-(--muted)" aria-hidden="true">&middot;</span>
+              <span class="text-(--muted)">
+                Incident {index + 1} of {timelineEvents.length}
+              </span>
+            </div>
+            <h1
+              class="mt-5 text-balance text-[2.1rem] font-medium leading-[1.12] text-(--ink) sm:text-[2.6rem] md:text-[3rem]"
+            >
+              {event.title}
+            </h1>
+            {
+              detail?.deck && (
+                <p class="mt-5 max-w-[42rem] text-balance text-[1.15rem] leading-[1.65] text-(--ink-soft)">
+                  {detail.deck}
+                </p>
+              )
+            }
+          </div>
+          <figure class="event-hero-visual" aria-hidden="true">
+            {
+              layers.map((layer, layerIndex) => (
+                <img
+                  src={layer}
+                  alt=""
+                  class="incident-layer"
+                  style={`--layer-index: ${layerIndex}`}
+                  width="512"
+                  height="512"
+                  loading="eager"
+                />
+              ))
+            }
+          </figure>
+        </div>
+      </div>
+      <div
+        class="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-b from-transparent to-(--surface)"
+        aria-hidden="true"
+      >
+      </div>
+    </header>
+
+    <div class="bg-(--surface)">
+      <div class="mx-auto w-full max-w-352 px-6 pb-16 pt-10 sm:px-10 lg:px-20">
+        <div class="event-columns">
+          <div class="event-article min-w-0">
+            <div class="event-body">
+              {body.map((paragraph) => <p set:html={paragraph} />)}
+            </div>
+
+            {
+              receipts.length > 0 && (
+                <aside class="event-receipts mt-10">
+                  <h2 class="ui-text text-sm font-semibold uppercase tracking-[0.08em] text-(--muted)">
+                    The receipts
+                  </h2>
+                  <ul class="mt-4 space-y-3">
+                    {receipts.map((receipt) => (
+                      <li class="event-receipt" set:html={receipt} />
+                    ))}
+                  </ul>
+                </aside>
+              )
+            }
+
+            {
+              images.length > 0 && (
+                <div class="mt-12 space-y-10">
+                  {images.map((image) => (
+                    <figure class="event-figure">
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        width={image.width}
+                        height={image.height}
+                        loading="lazy"
+                      />
+                      {(image.caption || image.sourceUrl) && (
+                        <figcaption class="ui-text mt-2.5 text-sm leading-5 text-(--muted)">
+                          {image.caption}
+                          {image.sourceUrl && (
+                            <>
+                              {" "}
+                              <a
+                                href={image.sourceUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="underline decoration-1 underline-offset-[0.2em] transition hover:text-(--ink)"
+                              >
+                                Source
+                              </a>
+                            </>
+                          )}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ))}
+                </div>
+              )
+            }
+
+            {
+              reactions.length > 0 && (
+                <section class="mt-14">
+                  <h2 class="text-[1.5rem] font-medium leading-tight text-(--ink)">
+                    What the internet said
+                  </h2>
+                  <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                    {reactions.map((reaction) => {
+                      const platform = platformIcons[reaction.platform];
+                      return (
+                        <a
+                          href={reaction.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="event-reaction group"
+                        >
+                          <blockquote class="text-[1.02rem] leading-[1.6] text-(--ink)">
+                            &ldquo;{reaction.quote}&rdquo;
+                          </blockquote>
+                          <footer class="ui-text mt-4 flex items-center gap-2 text-sm text-(--muted)">
+                            <img
+                              src={platform.icon}
+                              alt={platform.label}
+                              class="h-3.5 w-3.5 shrink-0 opacity-70"
+                              width="14"
+                              height="14"
+                              loading="lazy"
+                            />
+                            <span class="font-medium text-(--ink-soft)">{reaction.author}</span>
+                            {reaction.meta && (
+                              <>
+                                <span aria-hidden="true">&middot;</span>
+                                <span class="truncate">{reaction.meta}</span>
+                              </>
+                            )}
+                          </footer>
+                        </a>
+                      );
+                    })}
+                  </div>
+                </section>
+              )
+            }
+
+            {
+              detail?.aftermath && (
+                <section class="event-aftermath mt-14">
+                  <h2 class="ui-text text-sm font-semibold uppercase tracking-[0.08em] text-(--muted)">
+                    Where it stands
+                  </h2>
+                  <p class="mt-4 text-[1.02rem] leading-[1.7] text-(--ink-soft)" set:html={detail.aftermath} />
+                </section>
+              )
+            }
+
+            {
+              !detail && (
+                <p class="ui-text mt-10 rounded-[3px] border border-dashed border-(--line) bg-(--canvas) px-4 py-3 text-sm text-(--muted)">
+                  The deep-dive for this incident is still being written. The summary above is the
+                  short version.
+                </p>
+              )
+            }
+
+            <section class="mt-14 border-t border-(--line-soft) pt-8">
+              <h2 class="ui-text text-sm font-semibold uppercase tracking-[0.08em] text-(--muted)">
+                Sources
+              </h2>
+              <div class="event-sources mt-4 flex flex-wrap gap-2">
+                {
+                  event.sources.map((source) => (
+                    <a
+                      href={source.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="ui-text inline-flex max-w-full items-center gap-1.5 rounded-[3px] border border-(--line) bg-(--canvas) px-2.5 py-1 text-sm leading-5 text-(--ink-soft) transition hover:border-(--ink) hover:text-(--ink)"
+                    >
+                      <img
+                        src={source.icon}
+                        alt=""
+                        class="h-3.5 w-3.5 shrink-0"
+                        width="14"
+                        height="14"
+                        loading="lazy"
+                        aria-hidden="true"
+                      />
+                      <span class="truncate">{source.title}</span>
+                      <span class="sr-only">opens in a new tab</span>
+                    </a>
+                  ))
+                }
+              </div>
+            </section>
+
+            <nav class="event-pagination mt-14 grid gap-3 border-t border-(--line-soft) pt-8 sm:grid-cols-2">
+              {
+                previousEvent ? (
+                  <a href={`/events/${previousEvent.slug}/`} class="event-pagination-link">
+                    <span class="ui-text text-xs font-semibold uppercase tracking-[0.08em] text-(--muted)">
+                      &larr; Previous incident
+                    </span>
+                    <span class="mt-1.5 block text-balance text-[1.05rem] font-medium leading-snug text-(--ink)">
+                      {previousEvent.title}
+                    </span>
+                  </a>
+                ) : (
+                  <span />
+                )
+              }
+              {
+                nextEvent && (
+                  <a
+                    href={`/events/${nextEvent.slug}/`}
+                    class="event-pagination-link sm:text-right"
+                  >
+                    <span class="ui-text text-xs font-semibold uppercase tracking-[0.08em] text-(--muted)">
+                      Next incident &rarr;
+                    </span>
+                    <span class="mt-1.5 block text-balance text-[1.05rem] font-medium leading-snug text-(--ink)">
+                      {nextEvent.title}
+                    </span>
+                  </a>
+                )
+              }
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<script>
+  const copyButton = document.querySelector("#copy-link");
+  const copyLabel = copyButton?.querySelector("[data-copy-label]");
+
+  copyButton?.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      if (copyLabel) {
+        copyLabel.textContent = "Copied!";
+        setTimeout(() => {
+          copyLabel.textContent = "Copy link";
+        }, 1600);
+      }
+    } catch {
+      window.prompt("Copy this link:", window.location.href);
+    }
+  });
+</script>
