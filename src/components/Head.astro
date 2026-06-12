@@ -65,5 +65,16 @@ const timelineSchema = {
     is:inline
     set:html={JSON.stringify(timelineSchema)}
   />
+  <script is:inline>
+    try {
+      if (localStorage.getItem("clawd-theme") === "dark") {
+        document.documentElement.classList.add("dark");
+        var themeMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeMeta) themeMeta.setAttribute("content", "#1f1d19");
+      }
+    } catch {
+      /* localStorage unavailable */
+    }
+  </script>
   <title>{siteTitle}</title>
 </head>

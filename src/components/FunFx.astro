@@ -1,0 +1,291 @@
+<div id="fx-layer" aria-hidden="true"></div>
+<script>
+  const root = document.documentElement;
+  const layer = document.getElementById("fx-layer");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  const syncDarkAssets = (dark: boolean) => {
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    themeMeta?.setAttribute("content", dark ? "#1f1d19" : "#faf9f5");
+    const closing = document.querySelector(".closing-image");
+    if (closing instanceof HTMLImageElement) {
+      const next = dark ? closing.dataset.darkSrc : closing.dataset.lightSrc;
+      if (next) closing.src = next;
+    }
+  };
+
+  const setTheme = (dark: boolean) => {
+    root.classList.toggle("dark", dark);
+    syncDarkAssets(dark);
+    try {
+      localStorage.setItem("clawd-theme", dark ? "dark" : "light");
+    } catch {
+      /* localStorage unavailable */
+    }
+  };
+
+  syncDarkAssets(root.classList.contains("dark"));
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key !== "d" && event.key !== "D") return;
+    if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+    const target = event.target;
+    if (
+      target instanceof HTMLElement &&
+      (target.isContentEditable ||
+        /^(input|textarea|select)$/i.test(target.tagName))
+    ) {
+      return;
+    }
+    setTheme(!root.classList.contains("dark"));
+  });
+
+  type Particle = {
+    el: HTMLElement;
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    rot: number;
+    vr: number;
+    size: number;
+    rest: number;
+    age: number;
+    life: number;
+    fading: boolean;
+  };
+
+  const particles = new Set<Particle>();
+  let rafId = 0;
+  let lastTime = 0;
+
+  const rand = (min: number, max: number) => min + Math.random() * (max - min);
+  const pick = <T,>(options: readonly T[]) =>
+    options[Math.floor(Math.random() * options.length)];
+
+  const step = (now: number) => {
+    const dt = Math.min((now - lastTime) / 1000, 0.05);
+    lastTime = now;
+    const floor = window.innerHeight;
+    const right = window.innerWidth;
+
+    for (const p of particles) {
+      p.age += dt;
+      p.vy += 2300 * dt;
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+      p.rot += p.vr * dt;
+
+      if (p.y + p.size > floor) {
+        p.y = floor - p.size;
+        if (Math.abs(p.vy) > 90) {
+          p.vy = -Math.abs(p.vy) * p.rest;
+          p.vx *= 0.82;
+          p.vr *= 0.7;
+        } else {
+          p.vy = 0;
+          p.vx *= 0.92;
+          p.vr *= 0.9;
+        }
+      }
+      if (p.x < 0) {
+        p.x = 0;
+        p.vx = Math.abs(p.vx) * 0.6;
+      } else if (p.x + p.size > right) {
+        p.x = right - p.size;
+        p.vx = -Math.abs(p.vx) * 0.6;
+      }
+
+      if (p.age > p.life && !p.fading) {
+        p.fading = true;
+        p.el.style.opacity = "0";
+      }
+      if (p.age > p.life + 0.45) {
+        p.el.remove();
+        particles.delete(p);
+        continue;
+      }
+      p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${p.rot}deg)`;
+    }
+
+    rafId = particles.size ? requestAnimationFrame(step) : 0;
+  };
+
+  const startLoop = () => {
+    if (!rafId) {
+      lastTime = performance.now();
+      rafId = requestAnimationFrame(step);
+    }
+  };
+
+  type ParticleSeed = { node: HTMLElement; size: number };
+
+  const spawn = (
+    seed: ParticleSeed,
+    x: number,
+    y: number,
+    vx: number,
+    vy: number,
+  ) => {
+    if (!layer || reduceMotion.matches || particles.size >= 90) return;
+    const { node, size } = seed;
+    node.classList.add("fx-particle");
+    node.style.width = `${size}px`;
+    node.style.height = `${size}px`;
+    layer.append(node);
+    particles.add({
+      el: node,
+      x: x - size / 2,
+      y: y - size / 2,
+      vx,
+      vy,
+      rot: rand(-30, 30),
+      vr: rand(-420, 420),
+      size,
+      rest: rand(0.45, 0.62),
+      age: 0,
+      life: rand(3.2, 4.4),
+      fading: false,
+    });
+    startLoop();
+  };
+
+  const blockColors = ["#d97757", "#c25e3a", "#8e3f2f", "#e08862"];
+
+  const makeBlock = (): ParticleSeed => {
+    const node = document.createElement("div");
+    node.style.background = pick(blockColors);
+    return { node, size: rand(7, 16) };
+  };
+
+  const makeX = (): ParticleSeed => {
+    const node = document.createElement("div");
+    node.textContent = "✕";
+    node.style.color = "var(--accent)";
+    node.style.fontWeight = "700";
+    node.style.fontFamily = "Arial, Helvetica, sans-serif";
+    const size = rand(14, 22);
+    node.style.fontSize = `${size}px`;
+    node.style.lineHeight = "1";
+    return { node, size };
+  };
+
+  const iconPools = ["legal", "quality", "reliability", "policy"];
+
+  const makeIcon = (category: string | null): ParticleSeed => {
+    const pool =
+      category && iconPools.includes(category) ? category : pick(iconPools);
+    const img = document.createElement("img");
+    img.src = `/incident-layers/${pool}-${Math.floor(Math.random() * 9)}.avif`;
+    img.alt = "";
+    const node = document.createElement("div");
+    node.append(img);
+    return { node, size: rand(26, 46) };
+  };
+
+  const burst = (x: number, y: number, seeds: (() => ParticleSeed)[]) => {
+    for (const make of seeds) {
+      spawn(make(), x + rand(-8, 8), y + rand(-8, 8), rand(-280, 280), rand(-680, -260));
+    }
+  };
+
+  const rain = (count: number, category: string | null) => {
+    for (let i = 0; i < count; i++) {
+      spawn(
+        makeIcon(category),
+        rand(20, Math.max(40, window.innerWidth - 20)),
+        -60,
+        rand(-60, 60),
+        rand(0, 140),
+      );
+    }
+  };
+
+  const replayAnimation = (el: Element, className: string) => {
+    if (reduceMotion.matches) return;
+    el.classList.remove(className);
+    void el.getBoundingClientRect();
+    el.classList.add(className);
+  };
+
+  const clickCounts = new Map<string, number>();
+  const bump = (key: string) => {
+    const next = (clickCounts.get(key) ?? 0) + 1;
+    clickCounts.set(key, next);
+    return next;
+  };
+
+  const categoryOf = (el: Element) =>
+    el.closest("[data-category]")?.getAttribute("data-category")?.toLowerCase() ??
+    null;
+
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const x = event.clientX;
+    const y = event.clientY;
+
+    const correction = target.closest(".hero-correction");
+    if (correction) {
+      correction.classList.toggle("is-flipped");
+      burst(x, y, [makeX]);
+      return;
+    }
+
+    const heroArt = target.closest(".hero-pixel-art");
+    if (heroArt) {
+      replayAnimation(heroArt, "fx-wobble");
+      const clicks = bump("hero");
+      const seeds: (() => ParticleSeed)[] = Array.from(
+        { length: Math.min(5 + clicks * 2, 16) },
+        () => makeBlock,
+      );
+      seeds.push(makeX, makeX);
+      burst(x, y, seeds);
+      if (clicks % 8 === 0) rain(8 + Math.min(clicks, 16), null);
+      return;
+    }
+
+    const marker = target.closest(".timeline-marker, .timeline-marker-mobile");
+    if (marker) {
+      replayAnimation(marker, "fx-spin");
+      const category = categoryOf(marker);
+      const clicks = bump("markers");
+      const seeds: (() => ParticleSeed)[] = [
+        makeX,
+        makeX,
+        makeX,
+        () => makeIcon(category),
+      ];
+      if (clicks > 5) seeds.push(() => makeIcon(category));
+      burst(x, y, seeds);
+      return;
+    }
+
+    const chip = target.closest(".timeline-meta-category");
+    if (chip) {
+      replayAnimation(chip, "fx-wobble");
+      burst(x, y, [() => makeIcon(categoryOf(chip)), makeX]);
+      return;
+    }
+
+    const closing = target.closest(".closing-image");
+    if (closing) {
+      replayAnimation(closing, "fx-wobble");
+      const clicks = bump("closing");
+      burst(
+        x,
+        y,
+        Array.from({ length: Math.min(3 + clicks, 10) }, () => makeX),
+      );
+      if (clicks % 6 === 0) rain(10, null);
+      return;
+    }
+
+    const affiliate = target.closest(".affiliate-note");
+    if (affiliate) {
+      replayAnimation(affiliate, "fx-wobble");
+      burst(x, y, [makeX, makeX, makeX]);
+    }
+  });
+</script>
