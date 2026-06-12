@@ -438,36 +438,36 @@ export const timelineEvents: TimelineEvent[] = [
   {
     date: "2023-10-18",
     period: "Oct 18, 2023",
-    title: "Music Publishers Drag Claude Into Court",
+    title: "Music Giants Sue Anthropic Over Stolen Lyrics",
     summary:
-      "Universal, Concord, and ABKCO sued Anthropic, alleging Claude was trained on copyrighted lyrics and could reproduce lyrics from hundreds of songs. The 'constitutional AI' company got its first big copyright punch in the face from the music business.",
+      "Universal, Concord, and ABKCO claim Claude was trained on copyrighted lyrics and can spit out hundreds of songs on demand. The constitutional AI company met its first courtroom chorus.",
     sources: [source.guardianLyrics, source.justiaLyricsDocket],
     category: "Legal",
   },
   {
     date: "2024-07-25",
     period: "Jul 2024",
-    title: "ClaudeBot Hammers iFixit and Freelancer",
+    title: "ClaudeBot DDoSes iFixit by Accident",
     summary:
-      "ClaudeBot reportedly hit iFixit roughly a million times in 24 hours, while other sites complained about aggressive crawling. Anthropic said it honors robots.txt; web operators learned that only helps after you notice the bot eating your bandwidth.",
+      "ClaudeBot pummeled iFixit with roughly a million requests in a day while other sites cried foul over aggressive crawling. Anthropic insists it respects robots.txt, which only helps after the bandwidth is gone.",
     sources: [source.theVergeClaudeBot, source.ftClaudeBot],
     category: "Policy",
   },
   {
     date: "2024-08-20",
     period: "Aug 20, 2024",
-    title: "Authors Sue Over the Shadow-Library Diet",
+    title: "Authors Say Claude Ate Their Books",
     summary:
-      "Andrea Bartz, Charles Graeber, and Kirk Wallace Johnson alleged Anthropic copied books from pirate libraries and built a permanent training library from them. Every later 'responsible AI' claim had to live next to that complaint.",
+      "Andrea Bartz, Charles Graeber, and Kirk Wallace Johnson accuse Anthropic of hoovering up pirated books and keeping a permanent copy for training. Every future 'responsible AI' slide now sits next to that allegation.",
     sources: [source.classActionBartzComplaint, source.authorsGuildSettlement],
     category: "Legal",
   },
   {
     date: "2025-05-15",
     period: "May 15, 2025",
-    title: "Claude Hallucinates Its Way Into Anthropic's Own Lawsuit",
+    title: "Claude Cites Fake Case in Its Own Lawsuit",
     summary:
-      "In the music-publishers case, Anthropic's lawyers took responsibility for an expert-report citation that Claude fabricated. A model flaw became courtroom theater inside a case about the model itself.",
+      "Anthropic's lawyers blamed Claude for inventing a citation in the music publishers suit. The model's hallucination problem became evidence in a case about the model itself.",
     sources: [source.reutersHallucination],
     category: "Legal",
   },
@@ -475,117 +475,117 @@ export const timelineEvents: TimelineEvent[] = [
   {
     date: "2025-06-03",
     period: "Jun 3-5, 2025",
-    title: "Windsurf Gets Cut Off Mid-Race",
+    title: "Windsurf Loses First-Party Claude Access Overnight",
     summary:
-      "Windsurf said Anthropic sharply reduced first-party Claude access with little notice, right as OpenAI acquisition rumors swirled. Jared Kaplan later said it would be odd to sell Claude to OpenAI and pointed to compute constraints, which did not make the lockout feel less strategic.",
+      "Windsurf says Anthropic yanked priority access with little warning as OpenAI acquisition rumors flew. Jared Kaplan later blamed compute shortages, not politics.",
     sources: [source.techCrunchWindsurfAccess, source.techCrunchWindsurfKaplan],
     category: "Policy",
   },
   {
     date: "2025-06-04",
     period: "Jun 4, 2025",
-    title: "Reddit Sues Over the Scraping It Says Never Stopped",
+    title: "Reddit Says Claude Never Stopped Scraping",
     summary:
-      "Reddit sued Anthropic, alleging bots kept hitting Reddit after Anthropic said it had stopped and that Claude was trained on user content without a license. Unlike the book cases, Reddit framed the fight around platform rules, privacy promises, and contracts.",
+      "Reddit sued, claiming Anthropic's bots kept hitting the site after promises to stop and that Claude trained on user content without a license. The fight is framed around contracts, not copyright.",
     sources: [source.reutersReddit, source.apRedditLawsuit],
     category: "Legal",
   },
   {
     date: "2025-06-24",
     period: "Jun 24-25, 2025",
-    title: "A Fair-Use Win With a Piracy Hangover",
+    title: "Anthropic Wins Fair-Use Round, Piracy Claims Live On",
     summary:
-      "Judge William Alsup held that training on lawfully acquired books could be fair use, but the pirate-library claims survived. Anthropic won the model-training theory and still kept the shadow-library problem.",
+      "Judge William Alsup said training on lawfully acquired books can be fair use, but the pirate-library claims stay in play. Anthropic keeps the legal theory and the PR headache.",
     sources: [source.apFairUseRuling, source.authorsGuildSettlement],
     category: "Legal",
   },
   {
     date: "2025-07-16",
     period: "Feb-Jul 2025",
-    title: "Boris & Cat Leave, Anthropic Suddenly Cares",
+    title: "Anthropic Rehires Departing Stars, Ships Claude Code",
     summary:
-      "Claude Code began as Boris Cherny's no-master-plan terminal experiment and launched only as a limited research preview, while Cat Wu was still saying a dedicated subscription was something Anthropic was merely 'figuring out.' Then Cursor-maker Anysphere poached Cherny and Wu for senior roles, only for Anthropic to hire them back within two weeks. Soon after, Claude Code became a first-class subscription product.",
+      "Boris Cherny and Cat Wu left for Cursor, came back two weeks later, and suddenly Claude Code graduated from research toy to paid product. The timing looks like a retention coup.",
     sources: [source.investingCursorPoach, source.businessInsiderProPlan],
     category: "Policy",
   },
   {
     date: "2025-07-28",
     period: "Jul 28, 2025",
-    title: "Claude Code Enters the Rationing Era",
+    title: "Claude Code Gets a Weekly Cap",
     summary:
-      "Anthropic announced weekly limits for Pro and Max subscribers, blaming always-on Claude Code loops and account-sharing abuse. Fewer than 5% of users were supposed to be affected, but the signal was obvious: flat-rate agent work had run into a compute bill.",
+      "Anthropic imposed weekly limits on Pro and Max users, blaming always-on loops and shared accounts. Only a sliver of users were affected, but the message was clear: compute isn't free.",
     sources: [source.techCrunchRateLimits],
     category: "Policy",
   },
   {
     date: "2025-08-01",
     period: "Aug 1-2, 2025",
-    title: "OpenAI Gets Booted From Claude",
+    title: "Anthropic Kicks OpenAI Out of Claude",
     summary:
-      "Anthropic revoked OpenAI's Claude API access, saying OpenAI used Claude Code and internal tools to benchmark GPT-5 in violation of terms against competitor development. OpenAI called benchmarking standard safety work; Anthropic chose the bouncer role.",
+      "Anthropic revoked OpenAI's API access, saying the rival used Claude Code to benchmark GPT-5, breaching anti-competitor terms. OpenAI called it normal safety research; Anthropic called it trespassing.",
     sources: [source.wiredOpenAI, source.techCrunchOpenAI],
     category: "Policy",
   },
   {
     date: "2025-08-27",
     period: "Aug 27, 2025",
-    title: "Claude Code Shows Up in Cybercrime Reports",
+    title: "Criminals Love Claude Too",
     summary:
-      "Anthropic disclosed Claude misuse cases involving data extortion, North Korean remote-worker fraud, and AI-generated ransomware. The cleanup was useful; the dunk is that the safety-first product was already useful to attackers too.",
+      "Anthropic's own abuse report lists North Korean fake job applicants, ransomware writers, and data-extortion crews using Claude. Safety first, but also useful.",
     sources: [source.anthropicAugustMisuse],
     category: "Safety",
   },
   {
     date: "2025-09-10",
     period: "Sep 10, 2025",
-    title: "Claude and Console Go Dark at Peak Demand",
+    title: "Claude Goes Down During Peak Traffic",
     summary:
-      "Anthropic reported an outage hitting API access, Console, and Claude. In a year already full of compute and rate-limit drama, the reliability story got another easy screenshot.",
+      "An outage knocked out Claude.ai, the Console, and the API for hours. After months of rate-limit drama, the reliability scorecard got another black mark.",
     sources: [source.techCrunchOutageSep],
     category: "Reliability",
   },
   {
     date: "2025-09-17",
     period: "Sep 17, 2025",
-    title: "The 'It Got Worse' Postmortem Arrives",
+    title: "Anthropic Says Claude Got Dumber, Blames Bugs",
     summary:
-      "After weeks of user complaints, Anthropic said three infrastructure bugs intermittently degraded Claude responses from August into early September and explained why evals missed it. The admission was useful; the timing made users feel like unpaid QA.",
+      "Weeks of user complaints later, Anthropic admitted three infrastructure bugs degraded answers from August into September. Evals missed it, and users did the QA for free.",
     sources: [source.anthropicSeptemberPostmortem],
     category: "Quality",
   },
   {
     date: "2025-09-25",
     period: "Sep 25, 2025",
-    title: "The Pirated-Books Case Turns Into a $1.5B Bill",
+    title: "Anthropic Settles Pirated-Books Suit for $1.5 Billion",
     summary:
-      "A judge preliminarily approved a $1.5 billion settlement covering nearly 465,000 books at roughly $3,000 each. Anthropic avoided a trial on pirate-library sourcing, but the settlement number became the receipt.",
+      "A judge gave early approval to a deal covering roughly 465,000 books at about $3,000 each. Anthropic avoids a trial and keeps a very expensive receipt.",
     sources: [source.apSettlement, source.authorsGuildSettlement],
     category: "Legal",
   },
   {
     date: "2025-11-13",
     period: "Nov 13, 2025",
-    title: "Claude Code Gets Weaponized for Espionage",
+    title: "China-Linked Spies Weaponized Claude Code",
     summary:
-      "Anthropic said a China-linked actor manipulated Claude Code into attempting intrusions against roughly 30 targets, with AI handling most of the workflow. The agentic coding assistant pitch met an agentic cyberattack.",
+      "Anthropic says a state-tied group tricked Claude Code into probing about 30 targets, letting the model handle most of the hacking workflow. The coding assistant became the offensive tool.",
     sources: [source.anthropicEspionage],
     category: "Safety",
   },
   {
     date: "2026-01-11",
     period: "Jan 2026",
-    title: "xAI Gets the Competitor Lockout Treatment",
+    title: "xAI Staff Lose Claude Access",
     summary:
-      "xAI staff reportedly lost Claude access through Cursor after Anthropic enforced competitor-use rules. After Windsurf and OpenAI, the no-rivals policy looked less like an exception and more like product strategy.",
+      "Anthropic reportedly cut off xAI employees via Cursor under the same competitor rule used against OpenAI and Windsurf. The anti-rival policy now looks like standard practice.",
     sources: [source.economicTimesXai, source.ventureBeatHarness],
     category: "Policy",
   },
   {
     date: "2026-01-27",
     period: "Jan 27-Feb 15, 2026",
-    title: "Anthropic Sends Lawyers, OpenAI Gets ClawdBot",
+    title: "Trademark Spat Kills Clawdbot, Births OpenClaw",
     summary:
-      "Anthropic objected to Clawdbot's Claude/Clawd branding, forcing Steinberger into a rushed Moltbot rename he later said nearly made him delete the project. He landed on OpenClaw, called Sam Altman to sanity-check the name, and weeks later joined OpenAI to build personal agents.",
+      "Anthropic objected to the name Clawdbot, forcing creator Steinberger to rebrand to Moltbot, then OpenClaw. Weeks later Steinberger joined OpenAI to build personal agents.",
     sources: [
       source.businessInsiderClawdbotRename,
       source.lexOpenClawTranscript,
@@ -596,18 +596,18 @@ export const timelineEvents: TimelineEvent[] = [
   {
     date: "2026-01-29",
     period: "Jan 29, 2026",
-    title: "Transparency Report: 1.45 Million Bans",
+    title: "Anthropic Banned 1.45 Million Accounts in Six Months",
     summary:
-      "Anthropic disclosed 1.45 million banned accounts for July-December 2025, plus 52,000 appeals and 1,700 overturns. The numbers made the enforcement machine visible; from the outside, it still looked like 'trust the form.'",
+      "The company's transparency report shows 1.45 million bans, 52,000 appeals, and only 1,700 reversals between July and December 2025. The appeals process is a Google form and a prayer.",
     sources: [source.anthropicTransparency],
     category: "Policy",
   },
   {
     date: "2026-02-23",
     period: "Feb 23, 2026",
-    title: "Anthropic Raises Alarm Over 'Distillation Attacks'",
+    title: "Anthropic Cries Distillation Attack After 16M Prompts",
     summary:
-      "Anthropic accused DeepSeek, Moonshot, and MiniMax of 'industrial-scale' distillation, calling the scraping campaigns 'distillation attacks' after 24,000 fake accounts generated 16M Claude exchanges. It tied the concern to export controls and national security, while critics noted DeepSeek's alleged share was only 150K exchanges and Theo Browne said 16M is 'really not much' for an AI app because T3 Chat hits that volume most months.",
+      "Anthropic accused DeepSeek, Moonshot, and MiniMax of running 24,000 fake accounts to milk 16 million Claude exchanges. Critics note DeepSeek's slice was only 150K, and 16M isn't huge for popular apps.",
     sources: [
       source.anthropicDistillation,
       source.theVergeDistillation,
@@ -619,27 +619,27 @@ export const timelineEvents: TimelineEvent[] = [
   {
     date: "2026-02-26",
     period: "Feb 26-27, 2026",
-    title: "Pentagon Guardrails Become a Public Standoff",
+    title: "Anthropic Refuses Pentagon Kill-Switch Demands",
     summary:
-      "Dario Amodei said Anthropic would not remove safeguards for mass domestic surveillance or fully autonomous weapons, even as the Department of War threatened removal, a supply-chain-risk label, and the Defense Production Act. The AI-safety brand finally collided with procurement reality.",
+      "Dario Amodei says Anthropic won't drop safeguards for mass surveillance or autonomous weapons, even after the Pentagon threatened supply-chain blacklisting and Defense Production Act pressure.",
     sources: [source.anthropicDeptWarStatement],
     category: "Policy",
   },
   {
     date: "2026-03-02",
     period: "Mar 2-3, 2026",
-    title: "Unprecedented Demand Knocks Claude Over",
+    title: "Claude Buckles Under Its Own Popularity",
     summary:
-      "A surge in usage triggered major Claude disruptions in early March, followed by a string of status incidents. Anthropic's own status page later showed sub-99% 90-day uptime for claude.ai and around-99% uptime across several core surfaces.",
+      "A usage spike in early March triggered long outages and a run of status-page apologies. Anthropic later posted sub-99% uptime for claude.ai over 90 days.",
     sources: [source.tomsGuideMarchOutage, source.anthropicStatus],
     category: "Reliability",
   },
   {
     date: "2026-03-04",
     period: "Mar 4-12, 2026",
-    title: "Pentagon Brands Anthropic a Supply-Chain Risk",
+    title: "Pentagon Labels Anthropic a Supply-Chain Risk",
     summary:
-      "Anthropic said it received a March 4 letter designating it a supply-chain risk, then sued and asked for emergency relief. A model-policy fight suddenly became a defense-contracting survival fight.",
+      "A March 4 letter informed Anthropic of its new risk designation. The company sued for emergency relief, turning an ethics debate into a survival fight for defense contracts.",
     sources: [
       source.anthropicDeptWarUpdate,
       source.techCrunchDoDLawsuit,
@@ -650,9 +650,9 @@ export const timelineEvents: TimelineEvent[] = [
   {
     date: "2026-03-09",
     period: "Mar 9, 2026",
-    title: "Claude Wants $25 to Read Your PR",
+    title: "Claude Code Review Costs $25 Per Pull Request",
     summary:
-      "Anthropic launched Claude Code Review and told teams each review generally averages $15-25, billed separately by token usage. The company defended the price as the cost of 'depth,' but developers immediately compared it with tools like CodeRabbit at $24/month per user and Greptile at $30/month with 50 reviews included plus $1 per extra review.",
+      "Anthropic's new feature averages $15-25 per review, billed by the token. Developers compared it with flat-rate rivals like CodeRabbit at $24/month and Greptile at $30 for 50 reviews.",
     sources: [
       source.anthropicCodeReview,
       source.businessInsiderCodeReview,
@@ -665,27 +665,27 @@ export const timelineEvents: TimelineEvent[] = [
   {
     date: "2026-03-31",
     period: "Mar 31-Apr 1, 2026",
-    title: "Claude Code Leaked Itself",
+    title: "Half-Million Lines of Claude Code Leak Via Source Map",
     summary:
-      "A packaged source map exposed roughly half a million lines of Claude Code internals, including architecture and unreleased features. Anthropic said no customer data or credentials were exposed, which is not the same thing as 'this was fine.'",
+      "A bundled source map revealed roughly 500,000 lines of Claude Code internals, including unreleased features. Anthropic says no customer data was exposed, which isn't the same as harmless.",
     sources: [source.axiosSourceLeak, source.theVergeSourceLeak, source.guardianSourceLeak],
     category: "Reliability",
   },
   {
     date: "2026-04-01",
     period: "Apr 1, 2026",
-    title: "Anthropic Sends DMCAs to Everyone on GitHub",
+    title: "Anthropic's DMCA Spree Nukes Innocent GitHub Repos",
     summary:
-      "Trying to contain the Claude Code leak, Anthropic's takedown effort reportedly knocked out thousands of GitHub repositories, including accounts that had only forked the official Claude repo. The company later called the overreach accidental and walked much of it back, but wrongly DMCA'ing normal users' repos is dangerous and likely illegal.",
+      "Trying to stem the leak, Anthropic filed takedowns that wiped thousands of repos, including forks of its own official project. The company later reversed most claims, but the collateral damage was done.",
     sources: [source.techCrunchDMCA],
     category: "Legal",
   },
   {
     date: "2026-04-02",
     period: "Apr 2-14, 2026",
-    title: "AMD AI Lead Files Claude Code as a Bug",
+    title: "AMD AI Lead Says Claude Code Is Broken",
     summary:
-      "An AMD AI leader opened a GitHub issue saying Claude Code had regressed until it could not be trusted for complex engineering, backing the claim with thousands of sessions and tool calls. The complaint helped turn vague 'Claude got dumb' chatter into a data-backed developer backlash before Anthropic later admitted multiple product changes had degraded Claude Code.",
+      "An AMD executive filed a GitHub issue with thousands of sessions showing sharp regression on complex tasks. The complaint gave teeth to developer grumbling before Anthropic admitted it broke things.",
     sources: [
       source.githubAmdRegression,
       source.theRegisterAmdRegression,
@@ -697,72 +697,72 @@ export const timelineEvents: TimelineEvent[] = [
   {
     date: "2026-04-04",
     period: "Apr 4, 2026",
-    title: "OpenClaw Users Meet the Claw Tax",
+    title: "OpenClaw Users Forced Onto Metered API",
     summary:
-      "Anthropic told subscribers their Claude limits would no longer cover third-party harnesses like OpenClaw; users needed API keys or separately billed usage. The platform/provider conflict became explicit: build on Claude, then pay again when your tool gets popular.",
+      "Anthropic told subscribers that third-party wrappers like OpenClaw no longer count against plan limits; users must bring their own API keys and pay per token. Popular tools get punished for success.",
     sources: [source.techCrunchOpenClawPayExtra, source.theVergeOpenClaw],
     category: "Policy",
   },
   {
     date: "2026-04-10",
     period: "Apr 10, 2026",
-    title: "OpenClaw's Creator Gets Banned Anyway",
+    title: "OpenClaw Creator Banned, Then Unbanned",
     summary:
-      "TechCrunch reported Anthropic temporarily banned OpenClaw creator Peter Steinberger from Claude even after the new API-payment path. The company later reversed course, but the optics were pure walled-garden chaos.",
+      "Peter Steinberger lost Claude access days after the new API path was announced. Anthropic reversed the ban after press inquiries, but the episode looked like arbitrary gatekeeping.",
     sources: [source.techCrunchOpenClawBan],
     category: "Policy",
   },
   {
     date: "2026-04-15",
     period: "Apr 15, 2026",
-    title: "Claude.ai and Claude Code Login Break",
+    title: "Claude Login Breaks Across the Board",
     summary:
-      "Anthropic's status page said Claude.ai and Platform were down, Claude Code login did not work, and API, Console, and Code were all affected before recovery. For users, it was another 'is it me or is Claude down?' day.",
+      "Claude.ai, Console, and Code all went dark for hours after login failed. Users checked their own Wi-Fi, then checked Twitter, then checked the status page.",
     sources: [source.anthropicStatusApr15, source.anthropicStatus],
     category: "Reliability",
   },
   {
     date: "2026-04-15",
     period: "Apr 15-16, 2026",
-    title: "Anthropic Calls RCE 'Expected Behavior'",
+    title: "Anthropic Declines to Fix RCE in MCP STDIO",
     summary:
-      "OX Security reported that Anthropic's MCP STDIO design could expose downstream AI apps to command execution risks across millions of users and hundreds of thousands of servers. Researchers said Anthropic declined a protocol-level fix, calling the behavior expected and pushing sanitization onto developers.",
+      "OX Security warned that the protocol opens AI apps to command execution on millions of endpoints. Anthropic called the risk expected behavior and told developers to sanitize inputs themselves.",
     sources: [source.oxMcpFlaw, source.theHackerNewsMcp, source.theRegisterMcp],
     category: "Safety",
   },
   {
     date: "2026-04-17",
     period: "Apr 17-18, 2026",
-    title: "Claude Locks Out 60 Workers With a Google Form",
+    title: "60 Belo Workers Locked Out by Algorithm",
     summary:
-      "Anthropic abruptly suspended more than 60 Claude accounts at fintech company Belo for a vague policy violation, cutting employees off from workflows, integrations, skills, and conversation history. Access came back after roughly 15 hours, reportedly as a false positive, but the only appeal path was a generic Google Form.",
+      "Anthropic suspended their Claude accounts for a vague policy breach, freezing workflows and chat history. Access returned 15 hours later as a false positive, with only a Google form for appeals.",
     sources: [source.tomsHardwareBelo, source.ndtvBelo],
     category: "Policy",
   },
   {
     date: "2026-04-21",
     period: "Apr 21-22, 2026",
-    title: "Anthropic Tests a $100 Claude Code Paywall",
+    title: "Anthropic Experiments With $100 Claude Code Tier",
     summary:
-      "Developers noticed Claude Code disappear from the $20 Pro plan on Anthropic pricing pages, implying a jump to the $100 Max tier. Anthropic later said it was only a 2% new-user experiment and reverted the docs, but the confusion handed OpenAI an easy dunk and made Claude Code pricing feel unstable.",
+      "Pricing pages briefly hid Claude Code behind the $100 Max plan. Anthropic called it a 2% new-user test and reverted the docs, but the stunt handed OpenAI a free headline.",
     sources: [source.businessInsiderProPlan, source.theRegisterProPlan],
     category: "Policy",
   },
   {
     date: "2026-04-22",
     period: "Apr 22, 2026",
-    title: "The No-Kill-Switch Filing",
+    title: "Anthropic Admits It Can't Kill Claude in Classified Nets",
     summary:
-      "In the Pentagon fight, Anthropic said that once Claude is deployed inside classified networks it cannot monitor, alter, or switch it off. That undercut the comforting myth of a magic safety lever and made the accountability problem look uglier.",
+      "In the Pentagon fight, the company said once Claude runs inside classified systems it can't be monitored, altered, or shut off. The magic safety lever does not exist.",
     sources: [source.axiosNoKillSwitch, source.apNoKillSwitch],
     category: "Safety",
   },
   {
     date: "2026-04-23",
     period: "Apr 23-24, 2026",
-    title: "Anthropic Admits Claude Code Really Did Get Worse",
+    title: "Anthropic Details Why Claude Code Tanked",
     summary:
-      "A second quality postmortem traced the Claude Code decline to three product-layer changes: lower default reasoning effort, a cache bug that made Claude forgetful, and a brevity prompt that hurt coding. Anthropic denied intentional nerfing and reset subscriber limits.",
+      "A second postmortem pinned the decline on lower reasoning effort, a cache bug, and an over-eager brevity prompt. Limits were reset and the intentional-nerf rumor was denied.",
     sources: [
       source.anthropicAprilPostmortem,
       source.fortuneClaudeCode,
@@ -772,37 +772,37 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     date: "2026-04-12",
-    period: "Mar 6–Apr 12, 2026",
-    title: "Claude Code's Cache Forgot Everything in Five Minutes",
+    period: "Mar 6-Apr 12, 2026",
+    title: "Claude Code Cache Shrunk to Five Minutes, Costing Users $1,500",
     summary:
-      "For 33 straight days in February, Claude Code used 1-hour prompt caching on every call. Around March 6, that changed to 5 minutes with no announcement. Cache started expiring mid-session and re-creating at 12.5x the read rate, adding roughly $949 per user on Sonnet and $1,582 on Opus over three months. The regression lined up exactly with when subscribers first started hitting quota limits. Anthropic called it a bug after someone proved it with 120K API calls.",
+      "For 33 days the cache lived for an hour, then quietly dropped to five minutes. The change spiked read costs 12.5x, adding an estimated $949-$1,582 per user over three months before Anthropic called it a bug.",
     sources: [source.githubCacheTTLRegression],
     category: "Reliability",
   },
   {
     date: "2026-04-25",
     period: "Apr 25-26, 2026",
-    title: "Anthropic Charges More If They Don't Like You",
+    title: "Anthropic Bills Extra If Your Repo Mentions HERMES.md",
     summary:
-      "Claude Code's anti-abuse system treated the case-sensitive string HERMES.md in recent git commit messages as suspicious and routed Max-plan requests to extra-usage billing instead of included quota. One Max 20x user reported burning $200.98 while 86% of weekly capacity remained, then had to binary-search their own git history to isolate the magic word. The punchline: HERMES.md is a real AI-agent context-file convention, not random junk.",
+      "The anti-abuse system flagged the case-sensitive filename as suspicious and routed Max users to pay-per-use. One subscriber burned $200 while still under quota until he binary-searched his git log for the magic word.",
     sources: [source.githubHermesBillingBug, source.redditHermesBillingBug],
     category: "Reliability",
   },
   {
     date: "2026-04-25",
     period: "Apr 25, 2026",
-    title: "Claude Code Update Crashes on Resume",
+    title: "Claude Code Update Crashes on Resume, Gets Rolled Back",
     summary:
-      "Anthropic's status page said Claude Code v2.1.120 crashed when resuming sessions with --resume or --continue, forcing an automatic rollback to v2.1.119. Right after the postmortem, the product served another tiny reliability punchline.",
+      "Version 2.1.120 died when users ran --resume or --continue, so Anthropic reverted to 2.1.119. Another small reminder that shipping fast and breaking things is still in style.",
     sources: [source.anthropicStatusApr25],
     category: "Reliability",
   },
   {
     date: "2026-05-13",
     period: "May 13, 2026",
-    title: "Claude's 'Free Credits' Come With a 25x Price Increase",
+    title: "Claude's 'Free' Agent SDK Now Costs 25x More",
     summary:
-      "Anthropic moved Agent SDK, `claude -p`, Claude Code GitHub Actions, and third-party Agent SDK apps onto a separate monthly credit bucket. Subscription limits technically stayed the same; programmatic Claude usage got pushed into API-priced credits that run out fast or turn into a separate bill.",
+      "Anthropic moved Agent SDK and GitHub Actions usage into a separate credit bucket. Programmatic use that once hit plan limits now drains API-priced credits, turning 'free' into a surprise bill.",
     sources: [
       source.claudeDevsAgentSdkCreditThread,
       source.claudeHelpAgentSdkPlanCredit,
