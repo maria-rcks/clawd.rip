@@ -20,7 +20,7 @@ export const detail: EventDetail = {
   ],
   reactions: [
     {
-      platform: "x",
+      platform: "other",
       author: "SemiAnalysis",
       meta: "AI research firm; among the first to publicly flag the behavior after its GPU inference research was degraded",
       quote:
@@ -28,7 +28,7 @@ export const detail: EventDetail = {
       url: "https://futurism.com/artificial-intelligence/anthropic-concerned-models-ability-improve-itself",
     },
     {
-      platform: "x",
+      platform: "other",
       author: "Nathan Lambert (Interconnects / AI2)",
       meta: "Also wrote that the measure was 'far more about maintaining their competitive position'",
       quote:
@@ -36,7 +36,7 @@ export const detail: EventDetail = {
       url: "https://www.interconnects.ai/p/claude-fable-5-and-new-ai-safety",
     },
     {
-      platform: "x",
+      platform: "other",
       author: "Mike Famulare (Institute for Disease Modeling)",
       meta: "Quoted by The Register on overblocking",
       quote:
@@ -44,7 +44,7 @@ export const detail: EventDetail = {
       url: "https://www.theregister.com/ai-and-ml/2026/06/10/anthropic-claude-fable-5-refuses-innocuous-prompts/",
     },
     {
-      platform: "x",
+      platform: "other",
       author: "Will Brown (Prime Intellect)",
       meta: "Research lead at Prime Intellect",
       quote:

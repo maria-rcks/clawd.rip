@@ -52,5 +52,5 @@ export const detail: EventDetail = {
   ],
   images: [],
   aftermath:
-    "The settlement is proceeding through preliminary approval toward a final hearing in May 2026, with installments scheduled through September 2027; Anthropic's public benefit corporation status and AI safety branding remain intact, though any future mention of 'responsible development' now carries a $1.5 billion footnote about the books allegedly downloaded from pirate sites in 2021 and 2022.",
+    "As of the September 25, 2025 preliminary approval, the settlement was set for a final hearing in May 2026, with installments scheduled through September 2027; Anthropic's public benefit corporation status and AI safety branding remain intact, though any future mention of 'responsible development' now carries a $1.5 billion footnote about the books allegedly downloaded from pirate sites in 2021 and 2022.",
 };
