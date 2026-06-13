@@ -545,30 +545,47 @@ a:focus-visible {
 
 /* Event detail pages */
 
-.event-hero-lockup {
-  display: grid;
-  align-items: center;
-  gap: clamp(1.5rem, 4vw, 3rem);
+.event-hero-content {
+  padding-block: clamp(0.5rem, 2vw, 1.5rem);
 }
 
-.event-hero-visual {
-  position: relative;
+.event-hero-side {
+  position: absolute;
+  top: 58%;
+  z-index: 0;
+  display: none;
+  width: clamp(10rem, 14vw, 15rem);
+  height: clamp(8.5rem, 12vw, 12.5rem);
   margin: 0;
-  width: min(17.5rem, calc(100vw - 5.75rem));
-  height: clamp(10.5rem, 48vw, 13.5rem);
   pointer-events: none;
 }
 
-.event-hero-visual .incident-layer {
+.event-hero-side-left {
+  left: clamp(0.75rem, 4vw, 5.5rem);
+  transform: translateY(-50%) rotate(-3deg);
+}
+
+.event-hero-side-right {
+  right: clamp(0.75rem, 4vw, 5.5rem);
+  transform: translateY(-50%) rotate(3deg);
+}
+
+@media (min-width: 1024px) {
+  .event-hero-side {
+    display: block;
+  }
+}
+
+.event-hero-side .incident-layer {
   opacity: 0.96;
   filter: var(--sticker-outline) blur(0) drop-shadow(0 0.45rem 0.9rem rgba(20, 20, 19, 0.07));
   transform: translateY(0) scale(1) rotate(var(--layer-rotate));
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .event-hero-visual .incident-layer {
+  .event-hero-side .incident-layer {
     animation: event-layer-in 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-delay: calc(var(--layer-index) * 95ms);
+    animation-delay: calc(var(--layer-index) * 110ms);
   }
 
   @keyframes event-layer-in {
@@ -587,18 +604,6 @@ html.dark .event-reaction footer img {
   box-shadow: 0 0 0 2px #faf9f5;
 }
 
-@media (min-width: 768px) {
-  .event-hero-lockup {
-    grid-template-columns: minmax(0, 1fr) clamp(16rem, 26vw, 21rem);
-  }
-
-  .event-hero-visual {
-    width: clamp(16rem, 26vw, 21rem);
-    height: clamp(12rem, 20vw, 16rem);
-    justify-self: end;
-  }
-}
-
 .event-article {
   max-width: 46rem;
   margin-inline: auto;
@@ -606,13 +611,13 @@ html.dark .event-reaction footer img {
 
 .event-body p {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   line-height: 1.75;
   color: var(--ink-soft);
 }
 
 .event-body p + p {
-  margin-top: 1.3rem;
+  margin-top: 1.4rem;
 }
 
 .event-body > p:first-child::first-letter {
@@ -658,7 +663,7 @@ html.dark .event-reaction footer img {
 .event-receipt {
   position: relative;
   padding-left: 1.4rem;
-  font-size: 0.98rem;
+  font-size: 1.08rem;
   line-height: 1.6;
   color: var(--ink-soft);
 }
@@ -724,12 +729,6 @@ html.dark .event-reaction footer img {
 
 .event-pagination-link:hover span:last-child {
   color: var(--accent-dark);
-}
-
-@media (max-width: 767px) {
-  .event-hero-visual {
-    margin-top: 0.5rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

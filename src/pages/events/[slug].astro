@@ -32,7 +32,8 @@ const receipts = detail?.receipts ?? [];
 
 const previousEvent = timelineEvents[index - 1];
 const nextEvent = timelineEvents[index + 1];
-const layers = getIncidentLayers(event.category, index);
+const layersLeft = getIncidentLayers(event.category, index).slice(0, 2);
+const layersRight = getIncidentLayers(event.category, index + 4).slice(0, 2);
 
 const platformIcons: Record<ReactionPlatform, { icon: string; label: string }> = {
   x: { icon: "/source-icons/x.svg", label: "X" },
@@ -100,52 +101,58 @@ const articleSchema = {
           </button>
         </nav>
 
-        <div class="event-hero-lockup">
-          <div class="event-hero-copy">
-            <div class="ui-text flex flex-wrap items-center gap-x-2.5 gap-y-2 text-sm">
-              <span
-                class={`inline-flex items-center rounded-full border px-2.5 py-px font-medium leading-4 ${categoryStyles[event.category]}`}
-              >
-                {event.category}
-              </span>
-              <time datetime={event.date} class="font-semibold text-(--muted)">
-                {event.period}
-              </time>
-              <span class="text-(--muted)" aria-hidden="true">&middot;</span>
-              <span class="text-(--muted)">
-                Incident {index + 1} of {timelineEvents.length}
-              </span>
-            </div>
-            <h1
-              class="mt-5 text-balance text-[2.1rem] font-medium leading-[1.12] text-(--ink) sm:text-[2.6rem] md:text-[3rem]"
+        <div class="event-hero-content relative z-10 mx-auto max-w-[46rem] text-center">
+          <div class="ui-text flex flex-wrap items-center justify-center gap-x-2.5 gap-y-2 text-sm">
+            <span
+              class={`inline-flex items-center rounded-full border px-2.5 py-px font-medium leading-4 ${categoryStyles[event.category]}`}
             >
-              {event.title}
-            </h1>
-            {
-              detail?.deck && (
-                <p class="mt-5 max-w-[42rem] text-balance text-[1.15rem] leading-[1.65] text-(--ink-soft)">
-                  {detail.deck}
-                </p>
-              )
-            }
+              {event.category}
+            </span>
+            <time datetime={event.date} class="font-semibold text-(--muted)">
+              {event.period}
+            </time>
+            <span class="text-(--muted)" aria-hidden="true">&middot;</span>
+            <span class="text-(--muted)">
+              Incident {index + 1} of {timelineEvents.length}
+            </span>
           </div>
-          <figure class="event-hero-visual" aria-hidden="true">
-            {
-              layers.map((layer, layerIndex) => (
-                <img
-                  src={layer}
-                  alt=""
-                  class="incident-layer"
-                  style={`--layer-index: ${layerIndex}`}
-                  width="512"
-                  height="512"
-                  loading="eager"
-                />
-              ))
-            }
-          </figure>
+          <h1
+            class="mt-5 text-balance text-[2.1rem] font-medium leading-[1.12] text-(--ink) sm:text-[2.6rem] md:text-[3rem]"
+          >
+            {event.title}
+          </h1>
         </div>
       </div>
+      <figure class="event-hero-side event-hero-side-left" aria-hidden="true">
+        {
+          layersLeft.map((layer, layerIndex) => (
+            <img
+              src={layer}
+              alt=""
+              class="incident-layer"
+              style={`--layer-index: ${layerIndex}`}
+              width="512"
+              height="512"
+              loading="eager"
+            />
+          ))
+        }
+      </figure>
+      <figure class="event-hero-side event-hero-side-right" aria-hidden="true">
+        {
+          layersRight.map((layer, layerIndex) => (
+            <img
+              src={layer}
+              alt=""
+              class="incident-layer"
+              style={`--layer-index: ${layerIndex}`}
+              width="512"
+              height="512"
+              loading="eager"
+            />
+          ))
+        }
+      </figure>
       <div
         class="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-b from-transparent to-(--surface)"
         aria-hidden="true"
@@ -228,7 +235,7 @@ const articleSchema = {
                           rel="noopener noreferrer"
                           class="event-reaction group"
                         >
-                          <blockquote class="text-[1.02rem] leading-[1.6] text-(--ink)">
+                          <blockquote class="text-[1.1rem] leading-[1.6] text-(--ink)">
                             &ldquo;{reaction.quote}&rdquo;
                           </blockquote>
                           <footer class="ui-text mt-4 flex items-center gap-2 text-sm text-(--muted)">
@@ -262,7 +269,7 @@ const articleSchema = {
                   <h2 class="ui-text text-sm font-semibold uppercase tracking-[0.08em] text-(--muted)">
                     Where it stands
                   </h2>
-                  <p class="mt-4 text-[1.02rem] leading-[1.7] text-(--ink-soft)" set:html={detail.aftermath} />
+                  <p class="mt-4 text-[1.12rem] leading-[1.7] text-(--ink-soft)" set:html={detail.aftermath} />
                 </section>
               )
             }
@@ -306,7 +313,9 @@ const articleSchema = {
               </div>
             </section>
 
-            <nav class="event-pagination mt-14 grid gap-3 border-t border-(--line-soft) pt-8 sm:grid-cols-2">
+            <nav
+              class="event-pagination mt-14 grid gap-3 border-t border-(--line-soft) pt-8 sm:grid-cols-2"
+            >
               {
                 previousEvent ? (
                   <a href={`/events/${previousEvent.slug}/`} class="event-pagination-link">
