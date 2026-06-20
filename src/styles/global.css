@@ -449,6 +449,17 @@ html.fx-slashing * {
   touch-action: none;
 }
 
+button.timeline-meta-category {
+  margin: 0;
+  font: inherit;
+  appearance: none;
+}
+
+button.timeline-meta-category:focus-visible {
+  outline: 2px solid var(--accent-dark);
+  outline-offset: 3px;
+}
+
 @keyframes fx-wobble {
   0% {
     rotate: 0deg;

@@ -142,11 +142,14 @@ const displayedTimelineEvents = [...timelineEvents].reverse();
                     >
                       {event.period}
                     </time>
-                    <span
+                    <button
+                      type="button"
                       class={`timeline-meta-category ui-text inline-flex items-center rounded-full border px-2.5 py-px text-sm font-medium leading-4 ${categoryStyles[event.category]}`}
+                      data-category={event.category}
+                      aria-label={`Filter timeline by ${event.category}`}
                     >
                       {event.category}
-                    </span>
+                    </button>
                   </div>
                   <h2 class="timeline-title mt-4 text-[1.7rem] text-balance font-medium leading-[1.14] text-(--ink) md:text-[1.8rem]">
                     <a
@@ -206,7 +209,6 @@ const displayedTimelineEvents = [...timelineEvents].reverse();
     "#timeline-command [data-filter]",
   );
   const filterStatus = document.querySelector("#timeline-filter-status");
-  const emptyState = document.querySelector("#timeline-empty");
   const observedEntries = document.querySelectorAll(".timeline-entry");
   const prefersReducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
@@ -279,10 +281,6 @@ const displayedTimelineEvents = [...timelineEvents].reverse();
           : `${visibleCount} ${filter.toLowerCase()}`;
     }
 
-    if (emptyState instanceof HTMLElement) {
-      emptyState.hidden = visibleCount > 0;
-    }
-
     updateAlternatingLayout();
   };
 
@@ -311,11 +309,9 @@ const displayedTimelineEvents = [...timelineEvents].reverse();
     if (!(target instanceof Element)) return;
 
     const pill = target.closest(".timeline-meta-category");
-    if (!pill) return;
+    if (!(pill instanceof HTMLButtonElement)) return;
 
-    const entry = pill.closest("[data-category]");
-    const category =
-      entry instanceof HTMLElement ? entry.dataset.category : undefined;
+    const category = pill.dataset.category;
     if (category) applyFilter(category);
   });
 
