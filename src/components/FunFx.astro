@@ -120,14 +120,32 @@
 
   type ParticleSeed = { node: HTMLElement; size: number };
 
+  const PARTICLE_CAP = 90;
+
+  const evictOldestParticle = () => {
+    let oldest: Particle | null = null;
+    for (const particle of particles) {
+      if (!oldest || particle.age > oldest.age) oldest = particle;
+    }
+    if (!oldest) return;
+    oldest.el.remove();
+    particles.delete(oldest);
+  };
+
   const spawn = (
     seed: ParticleSeed,
     x: number,
     y: number,
     vx: number,
     vy: number,
+    options?: { recycleAtCap?: boolean },
   ) => {
-    if (!layer || reduceMotion.matches || particles.size >= 90) return;
+    if (!layer || reduceMotion.matches) return;
+    if (particles.size >= PARTICLE_CAP) {
+      if (options?.recycleAtCap) evictOldestParticle();
+      else return;
+    }
+    if (particles.size >= PARTICLE_CAP) return;
     const { node, size } = seed;
     node.classList.add("fx-particle");
     node.style.width = `${size}px`;
@@ -183,9 +201,21 @@
     return { node, size: rand(26, 46) };
   };
 
-  const burst = (x: number, y: number, seeds: (() => ParticleSeed)[]) => {
+  const burst = (
+    x: number,
+    y: number,
+    seeds: (() => ParticleSeed)[],
+    options?: { recycleAtCap?: boolean },
+  ) => {
     for (const make of seeds) {
-      spawn(make(), x + rand(-8, 8), y + rand(-8, 8), rand(-280, 280), rand(-680, -260));
+      spawn(
+        make(),
+        x + rand(-8, 8),
+        y + rand(-8, 8),
+        rand(-280, 280),
+        rand(-680, -260),
+        options,
+      );
     }
   };
 
@@ -219,11 +249,22 @@
     el.closest("[data-category]")?.getAttribute("data-category")?.toLowerCase() ??
     null;
 
-  document.addEventListener("click", (event) => {
-    const target = event.target;
-    if (!(target instanceof Element)) return;
-    const x = event.clientX;
-    const y = event.clientY;
+  const FX_SELECTOR =
+    ".hero-correction, .hero-pixel-art, .incident-layer, .timeline-marker, .timeline-marker-mobile, .timeline-meta-category, .closing-image, .affiliate-note";
+
+  const resolveFxTarget = (target: EventTarget | null) => {
+    if (!(target instanceof Element)) return null;
+    return target.closest(FX_SELECTOR);
+  };
+
+  for (const img of document.querySelectorAll(
+    ".hero-pixel-art, .closing-image, .incident-layer",
+  )) {
+    if (img instanceof HTMLImageElement) img.draggable = false;
+  }
+
+  const applyFx = (target: Element, x: number, y: number) => {
+    if (reduceMotion.matches) return;
 
     const correction = target.closest(".hero-correction");
     if (correction) {
@@ -246,10 +287,18 @@
       return;
     }
 
+    const layer = target.closest(".incident-layer");
+    if (layer) {
+      replayAnimation(layer, "fx-wobble");
+      const category = categoryOf(layer);
+      burst(x, y, [() => makeIcon(category), makeBlock, makeX]);
+      return;
+    }
+
     const marker = target.closest(".timeline-marker, .timeline-marker-mobile");
     if (marker) {
-      replayAnimation(marker, "fx-spin");
       const category = categoryOf(marker);
+      replayAnimation(marker, "fx-spin");
       const clicks = bump("markers");
       const seeds: (() => ParticleSeed)[] = [
         makeX,
@@ -287,5 +336,162 @@
       replayAnimation(affiliate, "fx-wobble");
       burst(x, y, [makeX, makeX, makeX]);
     }
-  });
+  };
+
+  const SLASH_THRESHOLD = 10;
+  const SLASH_SPAWN_INTERVAL_MS = 50;
+  const SLASH_ANIM_DELAY_MS = 350;
+  const SLASH_ANIM_INTERVAL_MS = 500;
+  const CLICK_THRESHOLD = 6;
+
+  let lastSlashSpawnAt = 0;
+
+  const trySlashBurst = (x: number, y: number) => {
+    const now = performance.now();
+    if (now - lastSlashSpawnAt < SLASH_SPAWN_INTERVAL_MS) return;
+    lastSlashSpawnAt = now;
+    burst(x, y, [makeBlock], { recycleAtCap: true });
+  };
+
+  const replaySlashTilt = (target: Element) => {
+    const correction = target.closest(".hero-correction");
+    if (correction) {
+      correction.classList.toggle("is-flipped");
+      return;
+    }
+
+    const marker = target.closest(".timeline-marker, .timeline-marker-mobile");
+    if (marker) {
+      replayAnimation(marker, "fx-spin");
+      return;
+    }
+
+    const wobbleTarget = target.closest(
+      ".hero-pixel-art, .incident-layer, .timeline-meta-category, .closing-image, .affiliate-note",
+    );
+    if (wobbleTarget) replayAnimation(wobbleTarget, "fx-wobble");
+  };
+
+  type SlashPointer = {
+    id: number;
+    target: Element;
+    lastX: number;
+    lastY: number;
+    totalDist: number;
+    nextAnimAt: number;
+    slashed: boolean;
+  };
+
+  let activeSlash: SlashPointer | null = null;
+  let suppressNextClick = false;
+
+  const maybeSlashAnim = (state: SlashPointer) => {
+    if (!state.slashed) return;
+
+    const now = performance.now();
+    while (now >= state.nextAnimAt) {
+      replaySlashTilt(state.target);
+      state.nextAnimAt += SLASH_ANIM_INTERVAL_MS;
+    }
+  };
+
+  const trackSlashSegment = (
+    x0: number,
+    y0: number,
+    x1: number,
+    y1: number,
+    state: SlashPointer,
+  ) => {
+    const dist = Math.hypot(x1 - x0, y1 - y0);
+    if (dist < 0.5) return;
+
+    state.totalDist += dist;
+
+    if (state.totalDist >= SLASH_THRESHOLD && !state.slashed) {
+      state.slashed = true;
+      state.nextAnimAt = performance.now() + SLASH_ANIM_DELAY_MS;
+    }
+  };
+
+  const endSlash = (event: PointerEvent) => {
+    if (!activeSlash || event.pointerId !== activeSlash.id) return;
+
+    const { target, slashed, totalDist } = activeSlash;
+    if (target.hasPointerCapture(event.pointerId)) {
+      target.releasePointerCapture(event.pointerId);
+    }
+
+    if (slashed) suppressNextClick = true;
+
+    if (!slashed && totalDist < CLICK_THRESHOLD) {
+      applyFx(target, event.clientX, event.clientY);
+    }
+
+    root.classList.remove("fx-slashing");
+    activeSlash = null;
+  };
+
+  document.addEventListener(
+    "click",
+    (event) => {
+      if (!suppressNextClick) return;
+      suppressNextClick = false;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    },
+    true,
+  );
+
+  document.addEventListener(
+    "pointerdown",
+    (event) => {
+      if (event.button !== 0 || reduceMotion.matches) return;
+      const fxTarget = resolveFxTarget(event.target);
+      if (!fxTarget) return;
+
+      event.preventDefault();
+      fxTarget.setPointerCapture(event.pointerId);
+      root.classList.add("fx-slashing");
+
+      activeSlash = {
+        id: event.pointerId,
+        target: fxTarget,
+        lastX: event.clientX,
+        lastY: event.clientY,
+        totalDist: 0,
+        nextAnimAt: Number.POSITIVE_INFINITY,
+        slashed: false,
+      };
+
+      lastSlashSpawnAt = 0;
+    },
+    { passive: false },
+  );
+
+  document.addEventListener(
+    "pointermove",
+    (event) => {
+      if (!activeSlash || event.pointerId !== activeSlash.id) return;
+
+      const { lastX, lastY } = activeSlash;
+      const x = event.clientX;
+      const y = event.clientY;
+      const dist = Math.hypot(x - lastX, y - lastY);
+      if (dist < 1) return;
+
+      if (activeSlash.slashed || activeSlash.totalDist >= SLASH_THRESHOLD) {
+        event.preventDefault();
+      }
+
+      trackSlashSegment(lastX, lastY, x, y, activeSlash);
+      if (activeSlash.slashed) trySlashBurst(x, y);
+      maybeSlashAnim(activeSlash);
+      activeSlash.lastX = x;
+      activeSlash.lastY = y;
+    },
+    { passive: false },
+  );
+
+  document.addEventListener("pointerup", endSlash);
+  document.addEventListener("pointercancel", endSlash);
 </script>

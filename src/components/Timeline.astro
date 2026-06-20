@@ -1,12 +1,16 @@
 ---
 import "../styles/global.css";
 import { timelineEvents } from "@/data/timeline";
-import { categoryStyles, getIncidentLayers } from "@/lib/event-visuals";
+import {
+  categoryStyles,
+  getIncidentLayers,
+  timelineCategories,
+} from "@/lib/event-visuals";
 
 const displayedTimelineEvents = [...timelineEvents].reverse();
 ---
 
-<section class="relative bg-(--surface)">
+<section class="relative bg-(--surface)" id="timeline-section">
   <div
     class="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-b from-(--canvas) to-(--surface) sm:h-28 lg:h-32"
     aria-hidden="true"
@@ -15,18 +19,68 @@ const displayedTimelineEvents = [...timelineEvents].reverse();
   <div
     class="relative mx-auto w-full max-w-352 overflow-hidden px-6 pb-6 pt-0 sm:px-10 sm:pb-8 lg:px-20"
   >
-    <div
-      class="timeline-toolbar relative z-20 mb-5 flex justify-start md:justify-center"
+    <nav
+      id="timeline-command"
+      class="mb-10 border-t border-dashed border-(--line) pt-6"
+      aria-label="Timeline controls"
     >
-      <button
-        id="timeline-order-toggle"
-        type="button"
-        class="timeline-order-button ui-text"
-        data-order="newest"
+      <div
+        class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between"
       >
-        Oldest first
-      </button>
-    </div>
+        <p class="ui-text m-0 text-sm leading-6 text-(--ink-soft)">
+          <span class="text-(--muted)">Index</span>
+          <span class="text-(--muted)" aria-hidden="true"> — </span>
+          <span
+            class="inline-flex flex-wrap items-baseline"
+            role="toolbar"
+            aria-label="Filter by category"
+          >
+            <button
+              type="button"
+              class="timeline-filter-link"
+              data-filter="all"
+              aria-pressed="true"
+            >
+              All
+            </button>
+            {
+              timelineCategories.map((category) => (
+                <>
+                  <span class="timeline-filter-sep" aria-hidden="true">
+                    ·
+                  </span>
+                  <button
+                    type="button"
+                    class="timeline-filter-link"
+                    data-filter={category}
+                    data-category={category}
+                    aria-pressed="false"
+                  >
+                    {category}
+                  </button>
+                </>
+              ))
+            }
+          </span>
+        </p>
+
+        <p class="ui-text m-0 flex shrink-0 items-baseline text-sm text-(--muted)">
+          <span id="timeline-filter-status">{timelineEvents.length} incidents</span>
+          <span class="timeline-filter-sep" aria-hidden="true">
+            ·
+          </span>
+          <button
+            id="timeline-order-toggle"
+            type="button"
+            class="timeline-order-button"
+            data-order="newest"
+          >
+            Oldest first
+          </button>
+        </p>
+      </div>
+    </nav>
+
     <div class="relative">
       <div
         class="timeline-spine absolute bottom-0 left-2.75 top-4.25 md:left-1/2 md:-translate-x-1/2"
@@ -146,7 +200,13 @@ const displayedTimelineEvents = [...timelineEvents].reverse();
 </section>
 <script>
   const timeline = document.querySelector("#timeline");
+  const timelineSection = document.querySelector("#timeline-section");
   const orderToggle = document.querySelector("#timeline-order-toggle");
+  const filterButtons = document.querySelectorAll(
+    "#timeline-command [data-filter]",
+  );
+  const filterStatus = document.querySelector("#timeline-filter-status");
+  const emptyState = document.querySelector("#timeline-empty");
   const observedEntries = document.querySelectorAll(".timeline-entry");
   const prefersReducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
@@ -173,6 +233,57 @@ const displayedTimelineEvents = [...timelineEvents].reverse();
 
     orderToggle.setAttribute("data-order", order);
     orderToggle.textContent = isNewest ? "Oldest first" : "Newest first";
+    updateAlternatingLayout();
+  };
+
+  const updateAlternatingLayout = () => {
+    if (!timeline) return;
+
+    for (const entry of timelineEntries) {
+      entry.classList.remove("is-alternate-left", "is-alternate-right");
+    }
+
+    const visibleEntries = Array.from(
+      timeline.querySelectorAll(
+        "[data-timeline-entry]:not(.is-filtered-out)",
+      ),
+    ).filter((entry): entry is HTMLElement => entry instanceof HTMLElement);
+
+    for (const [index, entry] of visibleEntries.entries()) {
+      entry.classList.add(
+        index % 2 === 0 ? "is-alternate-left" : "is-alternate-right",
+      );
+    }
+  };
+
+  const applyFilter = (filter: string) => {
+    let visibleCount = 0;
+
+    for (const button of filterButtons) {
+      if (!(button instanceof HTMLButtonElement)) continue;
+      const isActive = button.dataset.filter === filter;
+      button.setAttribute("aria-pressed", String(isActive));
+    }
+
+    for (const entry of timelineEntries) {
+      const category = entry.dataset.category;
+      const isVisible = filter === "all" || category === filter;
+      entry.classList.toggle("is-filtered-out", !isVisible);
+      if (isVisible) visibleCount += 1;
+    }
+
+    if (filterStatus) {
+      filterStatus.textContent =
+        filter === "all"
+          ? `${visibleCount} incidents`
+          : `${visibleCount} ${filter.toLowerCase()}`;
+    }
+
+    if (emptyState instanceof HTMLElement) {
+      emptyState.hidden = visibleCount > 0;
+    }
+
+    updateAlternatingLayout();
   };
 
   if (timeline && orderToggle) {
@@ -186,6 +297,29 @@ const displayedTimelineEvents = [...timelineEvents].reverse();
       );
     });
   }
+
+  for (const button of filterButtons) {
+    button.addEventListener("click", () => {
+      if (!(button instanceof HTMLButtonElement)) return;
+      const nextFilter = button.dataset.filter ?? "all";
+      applyFilter(nextFilter);
+    });
+  }
+
+  timelineSection?.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+
+    const pill = target.closest(".timeline-meta-category");
+    if (!pill) return;
+
+    const entry = pill.closest("[data-category]");
+    const category =
+      entry instanceof HTMLElement ? entry.dataset.category : undefined;
+    if (category) applyFilter(category);
+  });
+
+  applyFilter("all");
 
   if (prefersReducedMotion || !("IntersectionObserver" in window)) {
     for (const entry of observedEntries) {

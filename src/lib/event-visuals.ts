@@ -2,6 +2,14 @@ import type { TimelineEvent } from "@/data/timeline";
 
 export type TimelineCategory = TimelineEvent["category"];
 
+export const timelineCategories = [
+  "Legal",
+  "Quality",
+  "Reliability",
+  "Safety",
+  "Policy",
+] as const satisfies readonly TimelineCategory[];
+
 export const categoryStyles = {
   Legal:
     "border-[color-mix(in_srgb,var(--cat-legal)_45%,transparent)] bg-[color-mix(in_srgb,var(--cat-legal)_6%,transparent)] text-[color-mix(in_srgb,var(--cat-legal)_72%,transparent)]",
