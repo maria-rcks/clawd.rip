@@ -19,8 +19,13 @@
     "typescript": "latest"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@types/node": "^26.1.0",
+    "@types/opentype.js": "^1.3.10",
+    "opentype.js": "^2.0.0",
     "oxfmt": "latest",
-    "oxlint": "latest"
+    "oxlint": "latest",
+    "satori": "^0.26.0"
   },
   "packageManager": "bun@1.3.11"
 }

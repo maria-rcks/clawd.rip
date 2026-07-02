@@ -1,5 +1,35 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Anthropic Serif";
+  src: url("/fonts/anthropic-serif-roman.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Anthropic Sans";
+  src: url("/fonts/anthropic-sans-roman.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Anthropic Mono";
+  src: url("/fonts/anthropic-mono-roman.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "Anthropic Sans", Arial, Helvetica, ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Anthropic Serif", Georgia, "Times New Roman", ui-serif, serif;
+  --font-mono: "Anthropic Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
 :root {
   color-scheme: light;
   --canvas: #faf9f5;
@@ -71,7 +101,7 @@ html.dark .timeline-sources a img {
 html {
   background: var(--surface);
   color: var(--ink);
-  font-family: Georgia, "Times New Roman", ui-serif, serif;
+  font-family: "Anthropic Serif", Georgia, "Times New Roman", ui-serif, serif;
   scroll-behavior: smooth;
   overflow-wrap: break-word;
   scrollbar-color: gray transparent;
@@ -103,14 +133,14 @@ a:focus-visible {
 }
 
 .brand-title {
-  font-family: Georgia, "Times New Roman", ui-serif, serif;
+  font-family: "Anthropic Serif", Georgia, "Times New Roman", ui-serif, serif;
   font-weight: 500;
   letter-spacing: 0;
   font-size: clamp(2.75rem, 5.2vw, 4.5rem);
 }
 
 .ui-text {
-  font-family: Arial, Helvetica, ui-sans-serif, system-ui, sans-serif;
+  font-family: "Anthropic Sans", Arial, Helvetica, ui-sans-serif, system-ui, sans-serif;
 }
 
 .header-inner {
@@ -646,7 +676,7 @@ html.dark .event-reaction footer img {
 
 .event-body code,
 .event-receipt code {
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-family: "Anthropic Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: 0.88em;
   background: color-mix(in srgb, var(--line-soft) 55%, transparent);
   border-radius: 3px;

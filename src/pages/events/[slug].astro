@@ -63,6 +63,8 @@ const articleSchema = {
     title: pageTitle,
     description: pageDescription,
     path: `/events/${event.slug}/`,
+    image: `/events/${event.slug}/og.png`,
+    imageAlt: `${event.title} — ${event.period} on the Clawd.rip timeline`,
     ogType: "article",
     schema: articleSchema,
   }}
