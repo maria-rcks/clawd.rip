@@ -18,6 +18,7 @@ const icons = {
   anthropic: "/source-icons/anthropic.svg",
   ap: "/source-icons/favicons/ap.avif",
   axios: "/source-icons/favicons/axios.ico",
+  cnbc: "/source-icons/favicons/cnbc.png",
   businessInsider: "/source-icons/favicons/businessInsider.png",
   classAction: "/source-icons/favicons/classAction.webp",
   codeRabbit: "/source-icons/favicons/codeRabbit.png",
@@ -39,6 +40,7 @@ const icons = {
   status: "/source-icons/status.svg",
   techCrunch: "/source-icons/favicons/techCrunch.avif",
   techRadar: "/source-icons/favicons/techRadar.png",
+  theDecoder: "/source-icons/favicons/theDecoder.png",
   theHackerNews: "/source-icons/favicons/theHackerNews.webp",
   theRegister: "/source-icons/favicons/theRegister.webp",
   theVerge: "/source-icons/favicons/theVerge.avif",
@@ -74,6 +76,16 @@ const source = {
   anthropicDistillation: {
     title: "Anthropic",
     url: "https://www.anthropic.com/news/detecting-and-preventing-distillation-attacks",
+    icon: icons.anthropic,
+  },
+  anthropicFableMythosAccess: {
+    title: "Anthropic",
+    url: "https://www.anthropic.com/news/fable-mythos-access",
+    icon: icons.anthropic,
+  },
+  anthropicRedeployingFable: {
+    title: "Anthropic",
+    url: "https://www.anthropic.com/news/redeploying-fable-5",
     icon: icons.anthropic,
   },
   anthropicEspionage: {
@@ -172,6 +184,11 @@ const source = {
     url: "https://www.businessinsider.com/anthropic-claude-code-price-confusion-sam-altman-2026-4",
     icon: icons.businessInsider,
   },
+  cnbcFableBan: {
+    title: "CNBC",
+    url: "https://www.cnbc.com/2026/06/12/anthropic-disables-access-to-fable-5-and-mythos-5-to-comply-with-government-directive.html",
+    icon: icons.cnbc,
+  },
   codeRabbitPricing: {
     title: "CodeRabbit",
     url: "https://www.coderabbit.ai/pricing",
@@ -196,6 +213,11 @@ const source = {
     title: "Economic Times",
     url: "https://economictimes.indiatimes.com/tech/artificial-intelligence/xai-locked-out-of-claude-as-anthropic-enforces-competitor-rules/articleshow/126466343.cms",
     icon: icons.economicTimes,
+  },
+  forbesFableBan: {
+    title: "Forbes",
+    url: "https://www.forbes.com/sites/anishasircar/2026/06/16/anthropic-disabled-fable-5-and-mythos-5-after-a-us-export-control-order-heres-what-happened/",
+    icon: icons.forbes,
   },
   fortuneClaudeCode: {
     title: "Fortune",
@@ -387,6 +409,16 @@ const source = {
     title: "TechRadar",
     url: "https://www.techradar.com/pro/anthropic-launches-a-new-code-review-tool-to-check-ai-generated-content-but-it-might-cost-you-more-than-youd-hope",
     icon: icons.techRadar,
+  },
+  theDecoderFableReturn: {
+    title: "The Decoder",
+    url: "https://the-decoder.com/anthropics-fable-5-is-back-worldwide-after-a-two-week-government-ban-over-a-jailbreak/",
+    icon: icons.theDecoder,
+  },
+  theDecoderGpt2Mythos: {
+    title: "The Decoder",
+    url: "https://the-decoder.com/from-gpt-2-to-claude-mythos-the-return-of-ai-models-deemed-too-dangerous-to-release/",
+    icon: icons.theDecoder,
   },
   theHackerNewsMcp: {
     title: "The Hacker News",
@@ -861,6 +893,35 @@ export const timelineEvents: TimelineEvent[] = [
       source.decryptFableBacklash,
       source.decryptFableApology,
       source.interconnectsFableSafety,
+    ],
+    category: "Policy",
+  },
+  {
+    date: "2026-06-12",
+    slug: "fable-5-export-ban",
+    period: "Jun 12-30, 2026",
+    title: "US Government Recalls the 'Too Dangerous' Model",
+    summary:
+      "Three days after launch, Commerce hit Fable 5 and Mythos 5 with an export-control directive and Anthropic yanked both models worldwide. Amazon researchers had 'jailbroken' Fable into fixing known bugs; Dario spent years marketing models as too dangerous to release, and the government finally believed him.",
+    sources: [
+      source.anthropicFableMythosAccess,
+      source.cnbcFableBan,
+      source.forbesFableBan,
+      source.theDecoderGpt2Mythos,
+    ],
+    category: "Policy",
+  },
+  {
+    date: "2026-07-01",
+    slug: "fable-5-redeployment",
+    period: "Jul 1-7, 2026",
+    title: "Fable Returns: 50% of Your Limits, 6 Days Only",
+    summary:
+      "Export controls lifted after tests showed Opus 4.8, GPT-5.5, and even Haiku matched the 'dangerous' capability. Fable 5 came back capped at 50% of weekly limits through July 7, then credits-only, with new classifiers that bounce routine coding to Opus. Subscribers got a taste, a timer, and a second bill.",
+    sources: [
+      source.anthropicRedeployingFable,
+      source.theDecoderFableReturn,
+      source.theDecoderGpt2Mythos,
     ],
     category: "Policy",
   },
