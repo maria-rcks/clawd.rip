@@ -34,6 +34,7 @@ const icons = {
   justia: "/source-icons/favicons/justia.ico",
   lexFridman: "/source-icons/favicons/lexFridman.avif",
   ndtv: "/source-icons/favicons/ndtv.webp",
+  news: "/source-icons/news.svg",
   oxSecurity: "/source-icons/favicons/oxSecurity.webp",
   reuters: "/source-icons/favicons/reuters.png",
   reddit: "/source-icons/reddit.svg",
@@ -127,6 +128,16 @@ const source = {
     title: "Claude Help Center",
     url: "https://support.claude.com/en/articles/15036540-use-the-claude-agent-sdk-with-your-claude-plan",
     icon: icons.anthropic,
+  },
+  claudeHelpFablePromo: {
+    title: "Claude Help Center",
+    url: "https://support.claude.com/en/articles/15424964-claude-fable-5-promotional-access",
+    icon: icons.anthropic,
+  },
+  claudeFableExtensionTweet: {
+    title: "Claude",
+    url: "https://x.com/claudeai/status/2074548242386178258",
+    icon: icons.x,
   },
   apFairUseRuling: {
     title: "AP",
@@ -263,6 +274,11 @@ const source = {
     title: "Greptile",
     url: "https://www.greptile.com/pricing",
     icon: icons.greptile,
+  },
+  globalNerdyFableLastDay: {
+    title: "Global Nerdy",
+    url: "https://www.globalnerdy.com/2026/07/07/happy-last-free-day-of-claude-fable-5-everybody/",
+    icon: icons.news,
   },
   investingCursorPoach: {
     title: "Investing.com",
@@ -922,6 +938,21 @@ export const timelineEvents: TimelineEvent[] = [
       source.anthropicRedeployingFable,
       source.theDecoderFableReturn,
       source.theDecoderGpt2Mythos,
+    ],
+    category: "Policy",
+  },
+  {
+    date: "2026-07-07",
+    slug: "fable-5-last-day-extension",
+    period: "Jul 7-12, 2026",
+    title: "Fable Gets a Last-Day Extension, Not a Reset",
+    summary:
+      "Claude extended Fable 5 subscription access through July 12 on the very day users expected the promo to end. The 50% weekly cap stayed, usage did not visibly reset, and the replies filled with people who had already burned the quota racing the old deadline.",
+    sources: [
+      source.claudeFableExtensionTweet,
+      source.claudeHelpFablePromo,
+      source.anthropicRedeployingFable,
+      source.globalNerdyFableLastDay,
     ],
     category: "Policy",
   },
