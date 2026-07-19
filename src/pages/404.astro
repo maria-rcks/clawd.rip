@@ -1,0 +1,38 @@
+---
+import Layout from "@/layouts/Layout.astro";
+
+const title = "Page not found | Clawd.rip";
+const description = "The requested page could not be found.";
+---
+
+<Layout
+  head={{
+    title,
+    description,
+    path: "/404.html",
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: title,
+      description,
+    },
+  }}
+>
+  <section class="mx-auto flex min-h-[70svh] w-full max-w-4xl items-center px-6 py-20 sm:px-10">
+    <div>
+      <p class="ui-text mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-(--muted)">
+        Error 404
+      </p>
+      <h1 class="brand-title mb-5 text-(--ink)">This page went wrong too.</h1>
+      <p class="mb-8 max-w-xl text-lg leading-8 text-(--ink-soft)">
+        The page you requested does not exist, has moved, or was another unfortunate incident.
+      </p>
+      <a
+        href="/"
+        class="ui-text inline-flex rounded-[3px] border border-(--line) bg-(--surface) px-4 py-2.5 font-semibold text-(--ink) transition hover:border-(--ink)"
+      >
+        Return to the timeline
+      </a>
+    </div>
+  </section>
+</Layout>

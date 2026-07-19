@@ -5,7 +5,7 @@
   "outputDirectory": "dist",
   "headers": [
     {
-      "source": "/(.*)\\.(avif|webp|png|jpg|jpeg|gif|svg|ico|css|js)",
+      "source": "/(.*)\\.(avif|webp|png|jpg|jpeg|gif|svg|ico|css|js|woff2|woff|ttf)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -28,6 +28,15 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=3600, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/404.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, stale-while-revalidate=86400"
         }
       ]
     }

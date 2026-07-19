@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: "Anthropic Serif";
-  src: url("/fonts/anthropic-serif-roman.ttf") format("truetype");
+  src: url("/fonts/anthropic-serif-roman.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -10,7 +10,7 @@
 
 @font-face {
   font-family: "Anthropic Sans";
-  src: url("/fonts/anthropic-sans-roman.ttf") format("truetype");
+  src: url("/fonts/anthropic-sans-roman.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -18,7 +18,7 @@
 
 @font-face {
   font-family: "Anthropic Mono";
-  src: url("/fonts/anthropic-mono-roman.ttf") format("truetype");
+  src: url("/fonts/anthropic-mono-roman.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
