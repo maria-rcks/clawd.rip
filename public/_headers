@@ -1,0 +1,29 @@
+/_astro/*
+  Cache-Control: public, max-age=315360000, immutable
+
+/brand/*
+  Cache-Control: public, max-age=315360000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=315360000, immutable
+
+/incident-layers/*
+  Cache-Control: public, max-age=315360000, immutable
+
+/source-icons/*
+  Cache-Control: public, max-age=315360000, immutable
+
+/anthropicdead-*
+  Cache-Control: public, max-age=315360000, immutable
+
+/og-image.png
+  Cache-Control: public, max-age=315360000, immutable
+
+/events/*/og.png
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/404.html
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
