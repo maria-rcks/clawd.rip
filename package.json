@@ -16,7 +16,7 @@
     "@tailwindcss/vite": "latest",
     "astro": "latest",
     "tailwindcss": "latest",
-    "typescript": "latest"
+    "typescript": "^6.0.3"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
@@ -27,5 +27,5 @@
     "oxlint": "latest",
     "satori": "^0.26.0"
   },
-  "packageManager": "bun@1.3.11"
+  "packageManager": "pnpm@11.10.0"
 }
