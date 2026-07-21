@@ -139,6 +139,21 @@ const source = {
     url: "https://x.com/claudeai/status/2074548242386178258",
     icon: icons.x,
   },
+  claudeFablePlanSplitTweet: {
+    title: "Claude",
+    url: "https://x.com/claudeai/status/2078302415804379218",
+    icon: icons.x,
+  },
+  claudeHelpFablePlan: {
+    title: "Claude Help Center",
+    url: "https://support.claude.com/en/articles/15424964-claude-fable-5-on-your-plan",
+    icon: icons.anthropic,
+  },
+  claudeHelpFableCredits: {
+    title: "Claude Help Center",
+    url: "https://support.claude.com/en/articles/15862783-claude-fable-5-one-time-free-credits-promotion",
+    icon: icons.anthropic,
+  },
   apFairUseRuling: {
     title: "AP",
     url: "https://apnews.com/article/anthropic-ai-fair-use-copyright-pirated-libraries-1e5cece51c2e4bd0bb21d94de2abb035",
@@ -429,6 +444,11 @@ const source = {
   theDecoderFableReturn: {
     title: "The Decoder",
     url: "https://the-decoder.com/anthropics-fable-5-is-back-worldwide-after-a-two-week-government-ban-over-a-jailbreak/",
+    icon: icons.theDecoder,
+  },
+  theDecoderFablePlanSplit: {
+    title: "The Decoder",
+    url: "https://the-decoder.com/anthropic-slashes-claude-fable-5-limits-in-max-and-team-premium-and-pushes-pro-users-toward-api-pricing/",
     icon: icons.theDecoder,
   },
   theDecoderGpt2Mythos: {
@@ -953,6 +973,21 @@ export const timelineEvents: TimelineEvent[] = [
       source.claudeHelpFablePromo,
       source.anthropicRedeployingFable,
       source.globalNerdyFableLastDay,
+    ],
+    category: "Policy",
+  },
+  {
+    date: "2026-07-20",
+    slug: "fable-5-plan-paywall",
+    period: "Jul 18-20, 2026",
+    title: "Fable 5: Half for Max, Metered for Pro",
+    summary:
+      "Anthropic made Fable 5 a standard benefit only for Max and premium seats, capped at 50% of their already-reduced weekly limits. Pro and Team Standard lost bundled access and got a one-time $100 credit instead—a number that sounds generous until one heavy Claude Code prompt can reportedly burn $50 or more.",
+    sources: [
+      source.claudeHelpFablePlan,
+      source.claudeHelpFableCredits,
+      source.claudeFablePlanSplitTweet,
+      source.theDecoderFablePlanSplit,
     ],
     category: "Policy",
   },
